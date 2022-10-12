@@ -336,6 +336,17 @@ void callBack(Interface *pUI,  void * board)
    Board* pBoard = (Board*) board;
 
 
+
+   //// move 
+   //if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
+   //   pUI->clearSelectPosition();
+   //else
+   //   possible = getPossibleMoves(board, pUI->getSelectPosition());
+
+   //// if we clicked on a blank spot, then it is not selected
+   //if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
+   //   pUI->clearSelectPosition();
+
    //// draw the board
    draw(pBoard, *pUI,possibleMoves);
    
