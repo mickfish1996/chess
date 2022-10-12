@@ -1,6 +1,7 @@
 #include "board.h"
 #include "piece.h"
 #include "space.h"
+#include "king.h"
 #include <iostream>
 
 /***************************************************************************
@@ -21,6 +22,8 @@ Board::Board()
 
       board.push_back(rowVector);
    }
+
+   fillBoard();
 }
 
 /***************************************************************************
@@ -61,4 +64,29 @@ void Board::addPiece(Piece piece)
    int row = piece.getRow();
 
    board[row][col] = piece;
+}
+
+/***************************************************************************
+* fill Board
+* will add all pieces to the board
+***************************************************************************/
+void Board::fillBoard()
+{
+   King wKing = King(0, 4, true);
+   addPiece(wKing);
+}
+
+/***************************************************************************
+ * King
+ * will set all the values to the defaults because there were no inputs
+ ***************************************************************************/
+void Board::draw(ogstream & gout) const
+{
+   for (int row = 0; row < 8; row++)
+   {
+      for (int col = 0; col < 8; col++)
+      {
+         board[row][col].draw(gout);
+      }
+   }
 }

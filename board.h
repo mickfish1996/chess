@@ -5,6 +5,7 @@
 ******************************************************************************/
 
 #include <vector>
+#include "uiDraw.h"
 
 #pragma once
 
@@ -18,6 +19,7 @@ public:
    Piece getPiece(const int& row, const int& col) const;
    int getCurrentTurn() const { return currentTurn; }
    void increaseTurn() { currentTurn++; }
+   void draw(ogstream & gout) const;
 
    friend class TestPawn;
    friend class TestKing;
@@ -26,4 +28,5 @@ private:
    int currentTurn = 0;
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }
+   void fillBoard();
 };

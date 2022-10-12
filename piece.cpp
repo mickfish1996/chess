@@ -1,5 +1,10 @@
 #include "piece.h"
 
+/*********************************************************************
+ * Piece
+ * Default constructor will fill all values that are needed for the 
+ * piece;
+ *********************************************************************/
 Piece::Piece()
 {
    whiteColor = true;
@@ -10,12 +15,21 @@ Piece::Piece()
    enPassantTurn = 0;
 }
 
+/*********************************************************************
+ * getPossibleMoves
+ * Will return all the possible moves for the piece
+ *********************************************************************/
 std::set<Move> Piece::getPossibleMoves(const Board& board)
 {
    std::set<Move> move;
    return move;
 }
 
+/*********************************************************************
+ * assignPosition
+ * Will take the char position given to the piece and will set the 
+ * position based off of that.
+ *********************************************************************/
 void Piece::assignPosition(const char* position)
 {
    int col;
@@ -49,4 +63,25 @@ void Piece::assignPosition(const char* position)
    }
 
    this->position.set(row, col);
+}
+
+/*********************************************************************
+ * Rook::Draw
+ * Will draw the rook onto the screen
+ *********************************************************************/
+void Rook::draw(ogstream& gout) const
+{
+   gout.drawRook(position.getLocation(), isWhite());
+}
+
+/*********************************************************************
+ * Rook::getPossibleMoves
+ * Will get all the possible moves for the rook and return a set
+ *********************************************************************/
+
+std::set<Move> getPossibleMoves(Board & board)
+{
+   std::set<Move> moves;
+
+   return moves;
 }

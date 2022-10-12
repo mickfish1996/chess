@@ -290,6 +290,9 @@ void draw(const  Board* board, const Interface & ui, const set <Move> & possible
    //for (it = possible.begin(); it != possible.end(); ++it)
    //   gout.drawPossible(*it.g);
 
+   board->draw(gout);
+
+
    
 }
 

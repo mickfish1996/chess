@@ -15,6 +15,20 @@ King::King()
 }
 
 /***************************************************************************
+ * King
+ * will set all the values to the defaults because there were no inputs
+ ***************************************************************************/
+King::King(int row, int col, bool white)
+{
+   position.setRow(row);
+   position.setCol(col);
+   lastMove = Move();
+   nMoves = 0;
+   whiteColor = white;
+   pieceType = 'k';
+}
+
+/***************************************************************************
 * getPossibleMoves
 * Will return a set with all possible moves for the king class.
 ***************************************************************************/
@@ -126,4 +140,13 @@ bool King::isValid(const int num)
    if (num < 0 || num > 8)
       return false;
    return true;
+}
+
+/***************************************************************************
+ * draw
+ * will draw the piece onto the board.
+ ***************************************************************************/
+void King::draw(ogstream& gout) const
+{
+   gout.drawKing(position.getLocation(), isWhite());
 }

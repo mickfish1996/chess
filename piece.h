@@ -11,6 +11,7 @@
 #include "move.h"
 #include <vector>
 #include "board.h"
+#include "uiDraw.h"
 
 class Board;
 
@@ -39,7 +40,7 @@ public:
    void setRow(int& r) { position.setRow(r); }
    void setCol(int& c) { position.setCol(c); }
    void setEnPassantTurn(const Board& board) { enPassantTurn = board.getCurrentTurn(); }
-   void draw() {}
+   virtual void draw(ogstream& gout) const {}
    void move() {}
    bool isWhite() const { return whiteColor; }
    void assignPosition(const char* position);
@@ -51,5 +52,6 @@ class Rook : public Piece
 public:
    friend class TestKing;
    Rook() { pieceType = 'r'; }
+   void draw(ogstream& gout) const;
 
 };
