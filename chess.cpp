@@ -274,7 +274,7 @@ set <int> getPossibleMoves(const char* board, int location)
  * DRAW
  * Draw the current state of the game
  ***************************************************/
-void draw(const char* board, const Interface & ui, const set <int> & possible)
+void draw(const  Board* board, const Interface & ui, const set <Move> & possible)
 {
    ogstream gout;
    
@@ -286,51 +286,11 @@ void draw(const char* board, const Interface & ui, const set <int> & possible)
    gout.drawSelected(ui.getSelectPosition());
 
    // draw the possible moves
-   set <int> :: iterator it;
-   for (it = possible.begin(); it != possible.end(); ++it)
-      gout.drawPossible(*it);
+   set <Move> :: iterator it;
+   //for (it = possible.begin(); it != possible.end(); ++it)
+   //   gout.drawPossible(*it.g);
 
-   // draw the pieces
-   for (int i = 0; i < 64; i++)
-      switch (board[i])
-      {
-      case 'P':
-         gout.drawPawn(i, true);
-         break;
-      case 'p':
-         gout.drawPawn(i, false);
-         break;
-      case 'K':
-         gout.drawKing(i, true);
-         break;
-      case 'k':
-         gout.drawKing(i, false);
-         break;
-      case 'Q':
-         gout.drawQueen(i, true);
-         break;
-      case 'q':
-         gout.drawQueen(i, false);
-         break;
-      case 'R':
-         gout.drawRook(i, true);
-         break;
-      case 'r':
-         gout.drawRook(i, false);
-         break;
-      case 'B':
-         gout.drawBishop(i, true);
-         break;
-      case 'b':
-         gout.drawBishop(i, false);
-         break;
-      case 'N':
-         gout.drawKnight(i, true);
-         break;
-      case 'n':
-         gout.drawKnight(i, false);
-         break;
-      }
+   
 }
 
 /*********************************************
@@ -368,26 +328,28 @@ bool move(char* board, int positionFrom, int positionTo)
  * engine will wait until the proper amount of
  * time has passed and put the drawing on the screen.
  **************************************/
-void callBack(Interface *pUI, void * p)
+void callBack(Interface *pUI,  void * board)
 {
-   set <int> possible;
-
+   std::set<Move> possibleMoves;
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
-   char * board = (char *)p;  
+   Board* pBoard = (Board*) board;
 
-   // move 
-   if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
-      pUI->clearSelectPosition();
-   else
-      possible = getPossibleMoves(board, pUI->getSelectPosition());
 
-   // if we clicked on a blank spot, then it is not selected
-   if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
-      pUI->clearSelectPosition();
 
-   // draw the board
-   draw(board, *pUI, possible);
+   //// move 
+   //if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
+   //   pUI->clearSelectPosition();
+   //else
+   //   possible = getPossibleMoves(board, pUI->getSelectPosition());
+
+   //// if we clicked on a blank spot, then it is not selected
+   //if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
+   //   pUI->clearSelectPosition();
+
+   //// draw the board
+   draw(pBoard, *pUI,possibleMoves);
+   
 
 }
 
@@ -504,35 +466,37 @@ int main(int argc, char** argv)
    Test test;
    test.run();
 
-   Interface ui("Chess");    
+   Interface ui("Chess");
+
+   Board board;
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
-   char board[64] = {
-      'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
-      'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      // ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
-      'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
-   };
+   //char board[64] = {
+   //   'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
+   //   'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
+   //   ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+   //   ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+   //   ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+   //   ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+   //   // ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+   //   'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
+   //   'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
+   //};
    
-#ifdef _WIN32
- //  int    argc;
- //  LPWSTR * argv = CommandLineToArgvW(GetCommandLineW(), &argc);
- //  string filename = argv[1];
-   if (__argc == 2)
-      readFile(__argv[1], board);
-#else // !_WIN32
-   if (argc == 2)
-      readFile(argv[1], board);
-#endif // !_WIN32
+//#ifdef _WIN32
+// //  int    argc;
+// //  LPWSTR * argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+// //  string filename = argv[1];
+//   if (__argc == 2)
+//      readFile(__argv[1], board);
+//#else // !_WIN32
+//   if (argc == 2)
+//      readFile(argv[1], board);
+//#endif // !_WIN32
 
    // set everything into action
-   ui.run(callBack, board);             
+   ui.run(callBack, &board);             
 
    return 0;
 }
