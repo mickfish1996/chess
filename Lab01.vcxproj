@@ -118,6 +118,7 @@
     <ClInclude Include="piece.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="space.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="testKing.h" />
     <ClInclude Include="testPawn.h" />
     <ClInclude Include="uiDraw.h" />

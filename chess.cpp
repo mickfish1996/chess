@@ -10,8 +10,7 @@
 #include <cassert>        // for ASSERT
 #include <fstream>        // for IFSTREAM
 #include <string>         // for STRING
-#include "testKing.h"
-#include "testPawn.h"
+#include "test.h"
 using namespace std;
 
 /***********************************************
@@ -502,11 +501,8 @@ int WINAPI WinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-   TestKing testK;
-   testK.run();
-
-   TestPawn testP;
-   testP.run();
+   Test test;
+   test.run();
 
    Interface ui("Chess");    
 
