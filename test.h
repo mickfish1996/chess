@@ -20,6 +20,6 @@ public:
 
 void Test::run()
 {
-   testKing.run();
+   //testKing.run();
    //testPawn.run();
 }

@@ -3,6 +3,8 @@
 #include "space.h"
 #include "king.h"
 #include "pawn.h"
+#include "bishop.h"
+#include "queen.h"
 #include <iostream>
 
 /***************************************************************************
@@ -80,6 +82,14 @@ void Board::fillBoard()
    board[0][7] = new Rook(0, 7, false);
    board[7][0] = new Rook(7, 0, true);
    board[7][7] = new Rook(7, 7, true);
+
+   board[0][2] = new Bishop(0, 2, false);
+   board[0][5] = new Bishop(0, 5, false);
+   board[7][2] = new Bishop(7, 2, true);
+   board[7][5] = new Bishop(7, 5, true);
+
+   board[0][3] = new Queen(0, 3, false);
+   board[7][4] = new Queen(7, 4, true);
 
    for (int col = 0; col < 8; col++)
    {
