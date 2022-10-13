@@ -72,8 +72,8 @@ void Board::addPiece(Piece piece)
 void Board::fillBoard()
 {
    delete board[0][4];
+   board[0][4] = new King(0, 4, false);
 
-   board[0][4] = new King(0, 4, true);
 }
 
 /***************************************************************************
@@ -88,4 +88,13 @@ void Board::draw(ogstream & gout) const
          (*board[row][col]).draw(gout);
  
    }
+}
+
+/***************************************************************************
+ * getMoves
+ * This function is used to get around the splicing to the base class
+ ***************************************************************************/
+std::set<Move> Board::getMoves(int row, int col, Board& board) const
+{ 
+   return this->board[row][col]->getPossibleMoves(board); 
 }

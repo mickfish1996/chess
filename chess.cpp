@@ -286,15 +286,14 @@ void draw(const  Board* board, const Interface & ui, const set <Move> & possible
    gout.drawSelected(ui.getSelectPosition());
 
    // draw the possible moves
-   set <Move> :: iterator it;
+   for (auto it = possible.begin(); it != possible.end(); it++)
+   {
+      gout.drawPossible(it->getDest().getLocation());
+   }
    //for (it = possible.begin(); it != possible.end(); ++it)
    //   gout.drawPossible(*it.g);
 
-   for (int row = 0; row < 8; row++)
-   {
-      for (int col = 0; col < 8; col++)
-         board->getPiece(row, col).draw(gout);
-   }
+   board->draw(gout);
 }
 
 /*********************************************
@@ -338,6 +337,13 @@ void callBack(Interface *pUI,  void * board)
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
    Board* pBoard = (Board*) board;
+
+   if (pUI->getSelectPosition() != -1 && pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).getType() != 's')
+   {
+      int row = pUI->getSelectPosition() / 8;
+      int col = pUI->getSelectPosition() % 8;
+      possibleMoves = pBoard->getMoves(row, col,*pBoard);
+   }
 
 
    //// draw the board

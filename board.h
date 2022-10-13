@@ -25,6 +25,7 @@ public:
 
    friend class TestPawn;
    friend class TestKing;
+   std::set<Move> getMoves(int row, int col, Board& board) const;
    const Piece& operator[] (const Position& pos) const 
    {
       return *board[pos.getRow()][pos.getCol()];
