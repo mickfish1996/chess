@@ -13,6 +13,8 @@ public:
 private:
    friend class TestKing;
    friend class TestPawn;
+
+   bool isValid(const int num);
    //int enPassantTurn;    // Moved to Piece, along with set and get.
 
 };

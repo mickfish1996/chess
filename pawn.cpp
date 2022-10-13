@@ -28,6 +28,8 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
 {
    // moveSet and captureSet are vectors in format of 
    // { {adjustRow, adjustCol} }.
+
+   int next = (!whiteColor ? 1 : -1);
    std::vector<std::vector<int>> captureSet = { {1, -1}, {1, 1} };
    std::vector<std::vector<int>> enPassantSet = { {0, -1}, {0, 1} };
    std::vector<std::vector<int>> moveSet;
@@ -48,26 +50,29 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in moveSet.
-      possPos.adjustRow(moveSet[i][0]);
+      possPos.adjustRow(moveSet[i][0], next);
       possPos.adjustCol(moveSet[i][1]);
-      Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
-
-      // If the destination piece is a Space, add possible move.
-      if (possPiece.getType() == 's')
+      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
-         Move move = Move();
-         move.setSource(this->getPosition());
-         move.setDest(possPos);
-         move.setPieceType(this->getType());
-         move.setWhiteColor(this->isWhite());
+         Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
 
-         // Check for Promotion
-         if (possPos.getRow() == 7)
+         // If the destination piece is a Space, add possible move.
+         if (possPiece.getType() == 's')
          {
-            move.setPromotion(true);
-         }
+            Move move = Move();
+            move.setSource(this->getPosition());
+            move.setDest(possPos);
+            move.setPieceType(this->getType());
+            move.setWhiteColor(this->isWhite());
 
-         possibleMoves.insert(move);
+            // Check for Promotion
+            if (possPos.getRow() == 7)
+            {
+               move.setPromotion(true);
+            }
+
+            possibleMoves.insert(move);
+         }
       }
    }
 
@@ -77,20 +82,23 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in captureSet.
-      possPos.adjustRow(captureSet[i][0]);
+      possPos.adjustRow(captureSet[i][0], next);
       possPos.adjustCol(captureSet[i][1]);
-      Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
-
-      // If the destination piece is not a space and is of the opposite color, add capture.
-      if (possPiece.getType() != 's' && possPiece.isWhite() != this->isWhite())
+      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
-         Move move = Move();
-         move.setSource(this->getPosition());
-         move.setDest(possPos);
-         move.setPieceType(this->getType());
-         move.setWhiteColor(this->isWhite());
-         move.setCapture(true);
-         possibleMoves.insert(move);
+         Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
+
+         // If the destination piece is not a space and is of the opposite color, add capture.
+         if (possPiece.getType() != 's' && possPiece.isWhite() != this->isWhite())
+         {
+            Move move = Move();
+            move.setSource(this->getPosition());
+            move.setDest(possPos);
+            move.setPieceType(this->getType());
+            move.setWhiteColor(this->isWhite());
+            move.setCapture(true);
+            possibleMoves.insert(move);
+         }
       }
    }
 
@@ -100,26 +108,40 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in enPassantSet.
-      possPos.adjustRow(enPassantSet[i][0]);
+      possPos.adjustRow(enPassantSet[i][0], next);
       possPos.adjustCol(enPassantSet[i][1]);
-      Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
-
-      // If possPiece is a pawn, and possPiece just moved two spaces, then make a move.
-      if (possPiece.getType() == 'p' && possPiece.getNMoves() == 1)
+      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
-         if (possPiece.getEnPassantTurn() == board.getCurrentTurn() - 1)
+         Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
+
+         // If possPiece is a pawn, and possPiece just moved two spaces, then make a move.
+         if (possPiece.getType() == 'p' && possPiece.getNMoves() == 1)
          {
-            Move move = Move();
-            move.setSource(this->getPosition());
-            possPos.adjustRow(moveSet[0][0]);   // Auto adjust for when change moveSet for Black Pieces.n
-            move.setDest(possPos);
-            move.setPieceType(this->getType());
-            move.setWhiteColor(this->isWhite());
-            move.setEnPassant(true);
-            possibleMoves.insert(move);
+            if (possPiece.getEnPassantTurn() == board.getCurrentTurn() - 1)
+            {
+               Move move = Move();
+               move.setSource(this->getPosition());
+               possPos.adjustRow(moveSet[0][0], next);   // Auto adjust for when change moveSet for Black Pieces.n
+               move.setDest(possPos);
+               move.setPieceType(this->getType());
+               move.setWhiteColor(this->isWhite());
+               move.setEnPassant(true);
+               possibleMoves.insert(move);
+            }
          }
       }
    }
 
    return possibleMoves;
+}
+
+/***************************************************************************
+ * isValid
+ * will confirm that all positions are in a valid spot to move.
+ ***************************************************************************/
+bool Pawn::isValid(const int num)
+{
+   if (num < 0 || num > 7)
+      return false;
+   return true;
 }

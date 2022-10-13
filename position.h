@@ -22,7 +22,7 @@ public:
    void setCol(const int c) { col = c; }
    void set(const int r, const int c);
    bool isValid();
-   void adjustRow(const int adjustRow) { row += adjustRow; }
+   void adjustRow(const int adjustRow, int next) { row += (adjustRow * next); }
    void adjustCol(const int adjustCol) { col += adjustCol; }
 
    bool operator== (Position rhs) const { return getLocation() == rhs.getLocation(); }
