@@ -17,6 +17,7 @@ class Board
 {
 public:
    Board();
+   Board(bool build);
    void addPiece(Piece piece);
    Piece getPiece(const int& row, const int& col) const;
    int getCurrentTurn() const { return currentTurn; }

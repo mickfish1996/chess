@@ -470,7 +470,7 @@ int main(int argc, char** argv)
 
    Interface ui("Chess");
 
-   Board board;
+   Board board(true);
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom

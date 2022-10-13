@@ -25,6 +25,26 @@ Board::Board()
 
       //board.push_back(rowVector);
    }
+}
+
+/***************************************************************************
+* DEFAULT CONSTRUCTOR
+* The Default Constructor creates an empty board.
+***************************************************************************/
+Board::Board(bool build)
+{
+   for (int row = 0; row < 8; row++)
+   {
+      //std::vector<Piece> rowVector = {};
+
+      for (int col = 0; col < 8; col++)
+      {
+         board[row][col] = new Space(row, col);
+         //rowVector.push_back(emptySpace);
+      }
+
+      //board.push_back(rowVector);
+   }
    fillBoard();
 }
 

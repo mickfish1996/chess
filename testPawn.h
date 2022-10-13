@@ -61,7 +61,7 @@ public:
       dummyMove.dest = dummyPos;
 
       Pawn pawn = Pawn();
-      pawn.whiteColor = true;
+      pawn.whiteColor = false;
       pawn.lastMove = dummyMove;
       pawn.nMoves = 0;
 
@@ -80,7 +80,7 @@ public:
       dummyMove.dest = dummyPos;
 
       Pawn pawn = Pawn();
-      pawn.whiteColor = false;
+      pawn.whiteColor = true;
       pawn.lastMove = dummyMove;
       pawn.nMoves = 0;
 
