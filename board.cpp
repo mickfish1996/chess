@@ -25,6 +25,7 @@ Board::Board()
 
       //board.push_back(rowVector);
    }
+      currentTurn = 0;
 }
 
 /***************************************************************************
@@ -46,6 +47,7 @@ Board::Board(bool build)
       //board.push_back(rowVector);
    }
    fillBoard();
+   currentTurn = 0;
 }
 
 /***************************************************************************

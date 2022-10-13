@@ -41,7 +41,7 @@ public:
 
 private:
    Piece* board[8][8];
-   int currentTurn = 0;
+   int currentTurn;
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }
    void fillBoard();

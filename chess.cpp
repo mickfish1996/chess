@@ -308,14 +308,29 @@ bool move(Board* board, int posFrom, int posTo)
    assert(posFrom >= 0 && posFrom < 64);
    assert(posTo >= 0 && posTo < 64);
 
+   std::set<Move> possiblePrevious;
+   bool turn = false;
 
-   // find the set of possible moves from our current location
-   std::set<Move> possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
-
-   if (possiblePrevious.find(Move(posFrom, posTo)) != possiblePrevious.end())
+   // Condition statement to see which colors turn it is to move if % 2 == 0 it is whites turn
+   // if 1 then it is blacks turn.
+   if (board->getCurrentTurn() % 2 == 0 && board->getPiece(posFrom / 8, posFrom % 8).isWhite())
    {
+      // find the set of possible moves from our current location
+      possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
+      turn = true;
+   }   
+   else if (board->getCurrentTurn() % 2 == 1 && board->getPiece(posFrom / 8, posFrom % 8).isWhite() != true)
+   {
+      // find the set of possible moves from our current location
+      possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
+      turn = true;
+   }
+
+   // If the move is in the potential moves and turn is true than that piece is able to move.
+   if (possiblePrevious.find(Move(posFrom, posTo)) != possiblePrevious.end() && turn)
+   {     
       board->swap(posTo, posFrom);
-      return true;
+      return true;      
    }
 
 
@@ -344,7 +359,13 @@ void callBack(Interface *pUI,  void * board)
 
 
    else if (pUI->getSelectPosition() != -1)
-      possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+   {
+      if(pBoard->getCurrentTurn() % 2 == 0 && pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).isWhite())
+         possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+
+      if (pBoard->getCurrentTurn() % 2 == 1 && !pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).isWhite())
+         possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+   }
    
    
    //else
