@@ -76,6 +76,11 @@ void Board::fillBoard()
    board[0][4] = new King(0, 4, false);
    board[7][3] = new King(7, 3, true);
 
+   board[0][0] = new Rook(0, 0, false);
+   board[0][7] = new Rook(0, 7, false);
+   board[7][0] = new Rook(7, 0, true);
+   board[7][7] = new Rook(7, 7, true);
+
    for (int col = 0; col < 8; col++)
    {
       board[1][col] = new Pawn(1, col, false);
@@ -120,7 +125,8 @@ void Board::swap(const int posTo, const int posFrom)
 
    board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
    board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
-   board[posTo / 8][posTo % 8]->setTurn(currentTurn);
+   board[posTo / 8][posTo % 8]->setTurn();
+
 
    board[posFrom / 8][posFrom % 8] = new Space(posFrom / 8, posFrom % 8);
 
