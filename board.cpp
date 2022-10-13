@@ -79,7 +79,10 @@ void Board::fillBoard()
    for (int col = 0; col < 8; col++)
    {
       board[1][col] = new Pawn(1, col, false);
+      board[6][col] = new Pawn(6, col, true);
    }
+
+
    
 
 }
@@ -113,9 +116,14 @@ std::set<Move> Board::setMoves(int row, int col, Board& board) const
  ***************************************************************************/
 void Board::swap(const int posTo, const int posFrom)
 {
+   increaseTurn();
+
    board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
    board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
+   board[posTo / 8][posTo % 8]->setTurn(currentTurn);
 
    board[posFrom / 8][posFrom % 8] = new Space(posFrom / 8, posFrom % 8);
+
+   
 
 }

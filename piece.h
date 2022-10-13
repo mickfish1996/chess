@@ -45,6 +45,7 @@ public:
    bool isWhite() const { return whiteColor; }
    void assignPosition(const char* position);
    void assignPosition(const int row, const int col) { position = Position(row, col); }
+   void setTurn(int turn) { nMoves = turn; }
    bool operator== (Piece rhs) const { return pieceType == rhs.getType(); }
 };
 
