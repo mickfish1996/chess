@@ -58,7 +58,7 @@ std::set<Move> King::getPossibleMoves(const Board& board)
          Move move;
          move.setSource(getPosition());
          move.setDest(Position(posMoveRow, posMoveCol));
-         move.setCastleK(true);
+         castleK = true;
          move.setPieceType('c');
          moves.insert(move);
       }

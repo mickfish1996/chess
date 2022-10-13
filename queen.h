@@ -10,6 +10,6 @@ public:
    Queen(int row, int col, bool white);
    std::set<Move> getPossibleMoves(const Board& board) override;
    bool isValid(const int row);
-   void draw(ogstream& gout) const override { gout.drawQueen(position.getLocation(), isWhite()); }
+   void draw(ogstream& gout) const override { gout.drawQueen(position.getLocation(), !isWhite()); }
 };
 

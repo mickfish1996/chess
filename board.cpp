@@ -95,26 +95,26 @@ void Board::addPiece(Piece piece)
 void Board::fillBoard()
 {
    //delete board[0][4];
-   board[0][4] = new King(0, 4, false);
-   board[7][3] = new King(7, 3, true);
+   board[0][4] = new King(0, 4, true);
+   board[7][3] = new King(7, 3, false);
 
-   board[0][0] = new Rook(0, 0, false);
-   board[0][7] = new Rook(0, 7, false);
-   board[7][0] = new Rook(7, 0, true);
-   board[7][7] = new Rook(7, 7, true);
+   board[0][0] = new Rook(0, 0, true);
+   board[0][7] = new Rook(0, 7, true);
+   board[7][0] = new Rook(7, 0, false);
+   board[7][7] = new Rook(7, 7, false);
 
-   board[0][2] = new Bishop(0, 2, false);
-   board[0][5] = new Bishop(0, 5, false);
-   board[7][2] = new Bishop(7, 2, true);
-   board[7][5] = new Bishop(7, 5, true);
+   board[0][2] = new Bishop(0, 2, true);
+   board[0][5] = new Bishop(0, 5, true);
+   board[7][2] = new Bishop(7, 2, false);
+   board[7][5] = new Bishop(7, 5, false);
 
-   board[0][3] = new Queen(0, 3, false);
-   board[7][4] = new Queen(7, 4, true);
+   board[0][3] = new Queen(0, 3, true);
+   board[7][4] = new Queen(7, 4, false);
 
    for (int col = 0; col < 8; col++)
    {
-      board[1][col] = new Pawn(1, col, false);
-      board[6][col] = new Pawn(6, col, true);
+      board[1][col] = new Pawn(1, col, true);
+      board[6][col] = new Pawn(6, col, false);
    }
 
 
@@ -153,10 +153,24 @@ void Board::swap(const int posTo, const int posFrom)
 {
    increaseTurn();
 
-   board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
-   board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
-   board[posTo / 8][posTo % 8]->setTurn();
+   if (board[posFrom / 8][posFrom % 8]->getType() == 'p' &&
+      board[posFrom / 8][posFrom % 8]->isWhite() && posTo / 8 == 7)
+   {
+      board[posTo / 8][posTo % 8] = new Queen(posTo / 8, posTo % 8, true);
+   }
 
+   else if (board[posFrom / 8][posFrom % 8]->getType() == 'p' &&
+      !board[posFrom / 8][posFrom % 8]->isWhite() && posTo / 8 == 0)
+   {
+      board[posTo / 8][posTo % 8] = new Queen(posTo / 8, posTo % 8, false);
+   }
+
+   else
+   {
+      board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
+      board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
+      board[posTo / 8][posTo % 8]->setTurn();
+   }
 
    board[posFrom / 8][posFrom % 8] = new Space(posFrom / 8, posFrom % 8);
 

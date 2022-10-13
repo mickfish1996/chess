@@ -95,7 +95,7 @@ Rook::Rook(int row, int col, bool white)
  *********************************************************************/
 void Rook::draw(ogstream& gout) const
 {
-   gout.drawRook(position.getLocation(), isWhite());
+   gout.drawRook(position.getLocation(), !isWhite());
 }
 
 /*********************************************************************

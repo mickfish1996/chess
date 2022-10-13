@@ -13,13 +13,14 @@ class King :
    public Piece
 {
 private:
-   /*const char pieceType = 'k';*/
+   bool castleK = false;
+   bool castleQ = false;
 public:
    King();
    King(int row, int col, bool white);
    std::set<Move> getPossibleMoves(const Board& board) override;
    bool isValid(const int row);
-   void draw(ogstream& gout) const override { gout.drawKing(position.getLocation(), isWhite()); }
+   void draw(ogstream& gout) const override { gout.drawKing(position.getLocation(), !isWhite()); }
 
    friend class TestKing;
 };

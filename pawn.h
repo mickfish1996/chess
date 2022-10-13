@@ -9,7 +9,7 @@ public:
    Pawn();
    Pawn(int row, int col, bool black);
    std::set<Move> getPossibleMoves(const Board& board);
-   void draw(ogstream& gout) const override { gout.drawPawn(position.getLocation(), isWhite()); }
+   void draw(ogstream& gout) const override { gout.drawPawn(position.getLocation(), !isWhite()); }
 private:
    friend class TestKing;
    friend class TestPawn;

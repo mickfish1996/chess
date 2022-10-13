@@ -29,7 +29,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
    // moveSet and captureSet are vectors in format of 
    // { {adjustRow, adjustCol} }.
 
-   int next = (!whiteColor ? 1 : -1);
+   int next = (whiteColor ? 1 : -1);
    std::vector<std::vector<int>> captureSet = { {1, -1}, {1, 1} };
    std::vector<std::vector<int>> enPassantSet = { {0, -1}, {0, 1} };
    std::vector<std::vector<int>> moveSet;
@@ -66,7 +66,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
             move.setWhiteColor(this->isWhite());
 
             // Check for Promotion
-            if (possPos.getRow() == 7)
+            if (possPos.getRow() == 7 || possPos.getRow() == 1)
             {
                move.setPromotion(true);
             }
