@@ -22,10 +22,12 @@ public:
    int getCurrentTurn() const { return currentTurn; }
    void increaseTurn() { currentTurn++; }
    void draw(ogstream & gout) const;
+   void swap(const int pos1, const int pos2);
 
    friend class TestPawn;
    friend class TestKing;
-   std::set<Move> getMoves(int row, int col, Board& board) const;
+
+   std::set<Move> setMoves(int row, int col, Board& board) const;
    const Piece& operator[] (const Position& pos) const 
    {
       return *board[pos.getRow()][pos.getCol()];
@@ -42,4 +44,5 @@ private:
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }
    void fillBoard();
+   std::set<Move> possibleMoves;
 };

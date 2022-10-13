@@ -27,6 +27,7 @@ public:
    Move();
    Move(const Position& sourcePosition);
    Move(const std::string move);
+   Move(const int location1, const int location2);
    Position getDest() const { return dest; }
    Position getSource() const { return source; }
    std::string getSmith() const;
@@ -44,6 +45,7 @@ public:
 
 
    bool operator== (const std::string& rhs) { return dest.getSmith() == rhs; }
+
    friend bool operator== (const Move& move1, const Move& move2);
    bool operator< (const Move& rhs) const { return dest.getLocation() < rhs.getDest().getLocation(); }
 

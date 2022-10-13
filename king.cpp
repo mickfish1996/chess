@@ -136,7 +136,7 @@ std::set<Move> King::getPossibleMoves(const Board& board)
  ***************************************************************************/
 bool King::isValid(const int num)
 {
-   if (num < 0 || num > 8)
+   if (num < 0 || num > 7)
       return false;
    return true;
 }

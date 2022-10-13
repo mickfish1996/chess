@@ -65,6 +65,23 @@ Move::Move(const std::string move)
    }
 }
 
+Move::Move(const int location1, const int location2)
+{
+   int row1 = location1 / 8;
+   int col1 = location1 % 8;
+   source = Position(row1, col1);
+
+   int row2 = location2 / 8;
+   int col2 = location2 % 8;
+   dest = Position(row2, col2);
+   pieceType = '0';
+   isWhite = false;
+   capture = false;
+   enpassant = false;
+   promotion = false;
+   castleK = false;
+   castleQ = false;
+}
 /***********************************************
  *
  ***********************************************/

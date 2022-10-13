@@ -11,6 +11,16 @@ Pawn::Pawn()
    pieceType = 'p';
 }
 
+Pawn::Pawn(int row, int col, bool white)
+{
+   position = Position(row, col);
+   whiteColor = white;
+   lastMove = Move();
+   nMoves = 0;
+   enPassantTurn = 0;
+   pieceType = 'p';
+}
+
 // TODO: Add sets for white and black pawns separately, or auto convert
 // white to black.   ///////////////////////////////////////////////////////
 // TODO: Check to make sure that we are checking for valid ranges in getPossibleMoves.

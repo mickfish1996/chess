@@ -2,6 +2,7 @@
 #include "piece.h"
 #include "space.h"
 #include "king.h"
+#include "pawn.h"
 #include <iostream>
 
 /***************************************************************************
@@ -71,8 +72,15 @@ void Board::addPiece(Piece piece)
 ***************************************************************************/
 void Board::fillBoard()
 {
-   delete board[0][4];
+   //delete board[0][4];
    board[0][4] = new King(0, 4, false);
+   board[7][3] = new King(7, 3, true);
+
+   for (int col = 0; col < 8; col++)
+   {
+      board[1][col] = new Pawn(1, col, false);
+   }
+   
 
 }
 
@@ -94,7 +102,20 @@ void Board::draw(ogstream & gout) const
  * getMoves
  * This function is used to get around the splicing to the base class
  ***************************************************************************/
-std::set<Move> Board::getMoves(int row, int col, Board& board) const
-{ 
-   return this->board[row][col]->getPossibleMoves(board); 
+std::set<Move> Board::setMoves(int row, int col, Board& board) const
+{
+   return this->board[row][col]->getPossibleMoves(board);
+}
+
+/***************************************************************************
+ * Swap
+ * This function is used to switch the pieces that are on the board.
+ ***************************************************************************/
+void Board::swap(const int posTo, const int posFrom)
+{
+   board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
+   board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
+
+   board[posFrom / 8][posFrom % 8] = new Space(posFrom / 8, posFrom % 8);
+
 }

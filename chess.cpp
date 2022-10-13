@@ -300,25 +300,24 @@ void draw(const  Board* board, const Interface & ui, const set <Move> & possible
  * MOVE 
  * Execute one movement. Return TRUE if successful
  *********************************************/
-bool move(char* board, int positionFrom, int positionTo)
+bool move(Board* board, int posFrom, int posTo)
 {
    // do not move if a move was not indicated
-   if (positionFrom == -1 || positionTo == -1)
+   if (posFrom == -1 || posTo == -1)
       return false;
-   assert(positionFrom >= 0 && positionFrom < 64);
-   assert(positionTo >= 0 && positionTo < 64);
+   assert(posFrom >= 0 && posFrom < 64);
+   assert(posTo >= 0 && posTo < 64);
 
 
    // find the set of possible moves from our current location
-   set <int> possiblePrevious = getPossibleMoves(board, positionFrom);
+   std::set<Move> possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
 
-   // only move there is the suggested move is on the set of possible moves
-   if (possiblePrevious.find(positionTo) != possiblePrevious.end())
+   if (possiblePrevious.find(Move(posFrom, posTo)) != possiblePrevious.end())
    {
-      board[positionTo] = board[positionFrom];
-      board[positionFrom] = ' ';
+      board->swap(posTo, posFrom);
       return true;
    }
+
 
    return false;
 
@@ -338,14 +337,18 @@ void callBack(Interface *pUI,  void * board)
    // is the first step of every single callback function in OpenGL. 
    Board* pBoard = (Board*) board;
 
-   if (pUI->getSelectPosition() != -1 && pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).getType() != 's')
-   {
-      int row = pUI->getSelectPosition() / 8;
-      int col = pUI->getSelectPosition() % 8;
-      possibleMoves = pBoard->getMoves(row, col,*pBoard);
-   }
+   
+
+   if (move(pBoard, pUI->getPreviousPosition(), pUI->getSelectPosition()))
+      pUI->clearSelectPosition();
 
 
+   else if (pUI->getSelectPosition() != -1)
+      possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+   
+   
+   //else
+     // pUI->clearPreviousPosition();
    //// draw the board
    draw(pBoard, *pUI,possibleMoves);
    
@@ -424,7 +427,7 @@ void parse(const string& textMove, int& positionFrom, int& positionTo)
  * READ FILE
  * Read a file where moves are encoded in Smith notation
  *******************************************************/
-void readFile(const char* fileName, char* board)
+void readFile(const char* fileName, Board* board)
 {
    // open the file
    ifstream fin(fileName);
