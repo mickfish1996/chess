@@ -3,11 +3,13 @@
 * The Board class handles all Board operations including drawing and moving
 * pieces.
 ******************************************************************************/
-
-#include <vector>
-#include "uiDraw.h"
-
 #pragma once
+#include <vector>
+#include <iostream>
+#include "uiDraw.h"
+#include "piece.h"
+
+
 
 class Piece;
 
@@ -23,8 +25,18 @@ public:
 
    friend class TestPawn;
    friend class TestKing;
+   const Piece& operator[] (const Position& pos) const 
+   {
+      return *board[pos.getRow()][pos.getCol()];
+   }
+   const Piece& operator = (Piece* pRhs) {}
+   Piece& operator[] (Position& pos)
+   {
+      return *board[pos.getRow()][pos.getCol()];
+   }
+
 private:
-   std::vector<std::vector<Piece>> board;
+   Piece* board[8][8];
    int currentTurn = 0;
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }

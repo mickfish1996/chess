@@ -17,7 +17,7 @@ private:
 public:
    King();
    King(int row, int col, bool white);
-   std::set<Move> getPossibleMoves(const Board& board) override;
+   std::set<Move> getPossibleMoves(const Board& board);
    bool isValid(const int row);
    void draw(ogstream& gout) const override { gout.drawKing(position.getLocation(), isWhite()); }
 

@@ -20,8 +20,7 @@ King::King()
  ***************************************************************************/
 King::King(int row, int col, bool white)
 {
-   position.setRow(row);
-   position.setCol(col);
+   position = Position(row, col);
    lastMove = Move();
    nMoves = 0;
    whiteColor = white;
@@ -140,13 +139,4 @@ bool King::isValid(const int num)
    if (num < 0 || num > 8)
       return false;
    return true;
-}
-
-/***************************************************************************
- * draw
- * will draw the piece onto the board.
- ***************************************************************************/
-void King::draw(ogstream& gout) const
-{
-   gout.drawKing(position.getLocation(), isWhite());
 }

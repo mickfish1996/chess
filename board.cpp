@@ -12,17 +12,17 @@ Board::Board()
 {
    for (int row = 0; row < 8; row++)
    {
-      std::vector<Piece> rowVector = {};
+      //std::vector<Piece> rowVector = {};
 
       for (int col = 0; col < 8; col++)
       {
          Space emptySpace(row, col);
-         rowVector.push_back(emptySpace);
+         board[row][col] = &emptySpace;
+         //rowVector.push_back(emptySpace);
       }
 
-      board.push_back(rowVector);
+      //board.push_back(rowVector);
    }
-
    fillBoard();
 }
 
@@ -33,7 +33,7 @@ Board::Board()
 Piece Board::getPiece(const int& row, const int& col) const
 {
    //return *(this->board[row][col]);
-   return board[row][col];
+   return *board[row][col];
 }
 
 /*************************************
@@ -63,7 +63,7 @@ void Board::addPiece(Piece piece)
    int col = piece.getCol();
    int row = piece.getRow();
 
-   board[row][col] = piece;
+   board[row][col] = &piece;
 }
 
 /***************************************************************************
@@ -85,8 +85,7 @@ void Board::draw(ogstream & gout) const
    for (int row = 0; row < 8; row++)
    {
       for (int col = 0; col < 8; col++)
-      {
-         board[row][col].draw(gout);
-      }
+         (*board[row][col]).draw(gout);
+ 
    }
 }

@@ -65,6 +65,11 @@ void Piece::assignPosition(const char* position)
    this->position.set(row, col);
 }
 
+void Piece::setEnPassantTurn(const Board& board)
+{
+   enPassantTurn = board.getCurrentTurn();
+}
+
 /*********************************************************************
  * Rook::Draw
  * Will draw the rook onto the screen

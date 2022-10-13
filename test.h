@@ -21,5 +21,5 @@ public:
 void Test::run()
 {
    testKing.run();
-   testPawn.run();
+   //testPawn.run();
 }

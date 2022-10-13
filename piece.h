@@ -39,7 +39,7 @@ public:
 
    void setRow(int& r) { position.setRow(r); }
    void setCol(int& c) { position.setCol(c); }
-   void setEnPassantTurn(const Board& board) { enPassantTurn = board.getCurrentTurn(); }
+   void setEnPassantTurn(const Board& board);
    virtual void draw(ogstream& gout) const {}
    void move() {}
    bool isWhite() const { return whiteColor; }
