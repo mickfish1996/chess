@@ -16,8 +16,7 @@ Board::Board()
 
       for (int col = 0; col < 8; col++)
       {
-         Space emptySpace(row, col);
-         board[row][col] = &emptySpace;
+         board[row][col] = new Space(row, col);
          //rowVector.push_back(emptySpace);
       }
 
@@ -72,8 +71,9 @@ void Board::addPiece(Piece piece)
 ***************************************************************************/
 void Board::fillBoard()
 {
-   King wKing = King(0, 4, true);
-   addPiece(wKing);
+   delete board[0][4];
+
+   board[0][4] = new King(0, 4, true);
 }
 
 /***************************************************************************
