@@ -1,11 +1,20 @@
-/******************************************************************************************
- * POSITION
- * The Position class keeps track of where the pieces are.
- ******************************************************************************************/
+/***********************************************************************
+ * Header File:
+ *     Positoin
+ * Author:
+ *     Kyler Melor, Michael Fisher
+ * Description:
+ *     The definition of all the needed atributes of Position
+ ************************************************************************/
+
 #pragma once
 #include <iostream>
 #include <sstream>
 
+/******************************************************************************************
+ * POSITION
+ * The Position class keeps track of where the pieces are.
+ ******************************************************************************************/
 class Position {
 public:
    Position() : row(0), col(0) { }

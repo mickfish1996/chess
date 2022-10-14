@@ -1,13 +1,22 @@
-/******************************************************************************
-* KING
-* The King class contains information needed specifically for King.
-******************************************************************************/
+/***********************************************************************
+ * Header File:
+ *     King
+ * Author:
+ *     Kyler Melor, Michael Fisher
+ * Description:
+ *     Defines the derived class King and all its needed methods
+ ************************************************************************/
 
 #pragma once
 #include "piece.h"
 #include "space.h"
 #include "uiDraw.h"
 #include <vector>
+
+/******************************************************************************
+* KING
+* The King class contains information needed specifically for King.
+******************************************************************************/
 
 class King :
    public Piece

@@ -1,9 +1,12 @@
-/******************************************************************************
-* PIECE
-* The Piece class contains all information about the pieces, including
-* inherited pieces. Each piece has its own class and contains information about
-* the piece's last move, color, position, and number of times moved.
-******************************************************************************/
+/***********************************************************************
+ * Header File:
+ *     Pawn, Rook
+ * Author:
+ *     Kyler Melor, Michael Fisher
+ * Description:
+ *     Defines the Base class Piece and all its needed methods
+ *     as well as the derived class rook.
+ ************************************************************************/
 
 #pragma once
 #include <set>
@@ -15,9 +18,12 @@
 
 class Board;
 
-/***********************************
-* PIECE Class
-***********************************/
+/******************************************************************************
+* PIECE
+* The Piece class contains all information about the pieces, including
+* inherited pieces. Each piece has its own class and contains information about
+* the piece's last move, color, position, and number of times moved.
+******************************************************************************/
 class Piece {
 protected:
    Position position;
@@ -49,6 +55,10 @@ public:
    bool operator== (Piece rhs) const { return pieceType == rhs.getType(); }
 };
 
+
+/***********************************
+* Rook Class
+***********************************/
 class Rook : public Piece
 {
 public:

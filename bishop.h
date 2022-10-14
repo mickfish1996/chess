@@ -1,8 +1,21 @@
+/***********************************************************************
+ * Header File:
+ *     Bishop
+ * Author:
+ *     Kyler Melor, Michael Fisher
+ * Description:
+ *     Defines the derived class bishop and all its needed methods
+ ************************************************************************/
 #pragma once
 #include "piece.h"
 #include "uiDraw.h"
 #include <vector>
 
+/*************************************************************************
+ * Bishop
+ * The Derived class Bishop holding its constructors and other needed
+ * methods.
+ *************************************************************************/
 class Bishop : public Piece
 {
 public:
