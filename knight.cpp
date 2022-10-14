@@ -53,7 +53,7 @@ std::set<Move> Knight::getPossibleMoves(const Board& board)
    for (int i = 0; i < moveSet.size(); i++)
    {
       // changleble position to determine where the knight can move.
-      Position possPos;
+      Position possPos = position;
       
       // Adjusting possiblePosition to represent every position in captureSet.
       possPos.adjustRow(moveSet[i][0], 1);
