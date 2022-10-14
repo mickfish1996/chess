@@ -154,28 +154,59 @@ std::set<Move> Board::setMoves(int row, int col, Board& board) const
 void Board::swap(const int posTo, const int posFrom)
 {
    increaseTurn();
+   
 
-   if (board[posFrom / 8][posFrom % 8]->getType() == 'p' &&
-      board[posFrom / 8][posFrom % 8]->isWhite() && posTo / 8 == 7)
+   int rowFrom = posFrom / 8;
+   int colFrom = posFrom % 8;
+
+   int rowTo = posTo / 8;
+   int colTo = posTo % 8;
+
+   int next = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
+
+   // This handles the promotion of the white pawn
+   if (board[rowFrom][colFrom]->getType() == 'p' &&
+      board[rowFrom][colFrom]->isWhite() && posTo / 8 == 7)
    {
-      board[posTo / 8][posTo % 8] = new Queen(posTo / 8, posTo % 8, true);
+      board[rowTo][colTo] = new Queen(posTo / 8, posTo % 8, true);
    }
 
-   else if (board[posFrom / 8][posFrom % 8]->getType() == 'p' &&
-      !board[posFrom / 8][posFrom % 8]->isWhite() && posTo / 8 == 0)
+   // This handles the promotion of the black pawn
+   else if (board[rowFrom][colFrom]->getType() == 'p' &&
+      !board[rowFrom][colFrom]->isWhite() && posTo / 8 == 0)
    {
-      board[posTo / 8][posTo % 8] = new Queen(posTo / 8, posTo % 8, false);
+      board[rowTo][colTo] = new Queen(posTo / 8, posTo % 8, false);
    }
+
+   // If the pawn moves two spaces this will update the EnPassant turn
+   else if (board[rowFrom][colFrom % 8]->getType() == 'p' && abs(rowFrom - rowTo) == 2)
+   {
+      board[rowTo][colTo] = board[rowFrom][colFrom];
+      board[rowTo][colTo]->assignPosition(rowTo, colTo);
+      board[rowTo][colTo]->setTurn();
+      board[rowTo][colTo]->setEnPassantTurn(currentTurn);
+   }
+
+   // In order to see if the piece can En Passant
+   else if (board[rowFrom][colFrom]->getType() == 'p' &&
+      board[rowTo][colTo]->getType() == 's' &&
+      board[rowTo - next][colTo]->getType() == 'p' &&
+      board[rowTo - next][colTo]->isWhite() != board[rowFrom][colFrom]->isWhite())
+   {
+      board[rowTo][colTo] = board[rowFrom][colFrom];
+      board[rowTo][colTo]->assignPosition(rowTo, colTo);
+      board[rowTo][colTo]->setTurn();
+      board[rowTo - next][colTo] = new Space(rowTo, colTo - next);
+   }
+
 
    else
    {
-      board[posTo / 8][posTo % 8] = board[posFrom / 8][posFrom % 8];
-      board[posTo / 8][posTo % 8]->assignPosition(posTo / 8, posTo % 8);
-      board[posTo / 8][posTo % 8]->setTurn();
+      board[rowTo][colTo] = board[rowFrom][colFrom];
+      board[rowTo][colTo]->assignPosition(rowTo, colTo);
+      board[rowTo][colTo]->setTurn();
    }
 
-   board[posFrom / 8][posFrom % 8] = new Space(posFrom / 8, posFrom % 8);
-
-   
+   board[rowFrom][colFrom] = new Space(rowFrom, colFrom);  
 
 }
