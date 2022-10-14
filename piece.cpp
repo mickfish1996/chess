@@ -65,9 +65,9 @@ void Piece::assignPosition(const char* position)
    this->position.set(row, col);
 }
 
-void Piece::setEnPassantTurn(const int& turn)
+void Piece::setEnPassantTurn(const Board& board)
 {
-   enPassantTurn = turn;
+   enPassantTurn = board.getCurrentTurn();
 }
 
 Rook::Rook()

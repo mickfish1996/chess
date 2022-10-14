@@ -369,7 +369,7 @@ bool move(Board* board, int posFrom, int posTo)
          // If Queen's side castle...
          if (posTo == (posFrom - 2))
          {
-            board->swap(0, 12);  // TODO: Fix Castling here.
+            board->swap(0, 4);  // TODO: Fix Castling here.
          }
          //else if (currentMove.getCastleK())
          // If King's side castle...
