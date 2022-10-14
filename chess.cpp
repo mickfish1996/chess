@@ -11,6 +11,8 @@
 #include <fstream>        // for IFSTREAM
 #include <string>         // for STRING
 #include "test.h"
+#include "king.h"
+
 using namespace std;
 
 /***************************************************
@@ -54,8 +56,8 @@ bool move(Board* board, int posFrom, int posTo)
    std::set<Move> possiblePrevious;
    bool turn = false;
 
-   // Condition statement to see which colors turn it is to move if % 2 == 0 it is whites turn
-   // if 1 then it is blacks turn.
+   // Condition statement to see which color's turn it is to move; if % 2 == 0 it is white's turn,
+   // if 1 then it is black's turn.
    if (board->getCurrentTurn() % 2 == 0 && board->getPiece(posFrom / 8, posFrom % 8).isWhite())
    {
       // find the set of possible moves from our current location
@@ -77,7 +79,6 @@ bool move(Board* board, int posFrom, int posTo)
       return true;      
    }
 
-
    return false;
 
 }
@@ -96,11 +97,8 @@ void callBack(Interface *pUI,  void * board)
    // is the first step of every single callback function in OpenGL. 
    Board* pBoard = (Board*) board;
 
-   
-
    if (move(pBoard, pUI->getPreviousPosition(), pUI->getSelectPosition()))
       pUI->clearSelectPosition();
-
 
    else if (pUI->getSelectPosition() != -1)
    {
@@ -111,13 +109,11 @@ void callBack(Interface *pUI,  void * board)
          possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
    }
    
-   
+   // This being commented out seems to make no difference.
    //else
      // pUI->clearPreviousPosition();
-   //// draw the board
-   draw(pBoard, *pUI,possibleMoves);
-   
-
+   // draw the board
+   draw(pBoard, *pUI, possibleMoves);
 }
 
 /********************************************************

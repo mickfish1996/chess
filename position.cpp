@@ -104,7 +104,7 @@ std::string Position::getSmith() const
  * getLocation
  * Will return the position in smith notation
  ***********************************************/
-int Position::getLocation() const
+int Position:: getLocation() const
 {
    return row * 8 + col;
 }
@@ -119,3 +119,13 @@ void Position::set(const int r, const int c)
    col = c;
 }
 
+/***********************************************
+ * SET LOCATION
+ * Sets the position based on a single integer
+ * representing location.
+ ***********************************************/
+void Position::setLoc(const int loc)
+{
+   row = loc / 8;
+   col = loc % 8;
+}

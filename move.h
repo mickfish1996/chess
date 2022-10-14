@@ -37,6 +37,9 @@ public:
    // getters
    Position getDest() const { return dest; }
    Position getSource() const { return source; }
+   char getType() const { return pieceType; }
+   bool getCastleK() const { return castleK; }
+   bool getCastleQ() const { return castleQ; }
    std::string getSmith() const;
    bool isWhite() const { return White; }
    bool isEnpassant() const { return enpassant; }

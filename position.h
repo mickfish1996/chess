@@ -29,6 +29,7 @@ public:
 
    void setRow(const int r) { row = r; }
    void setCol(const int c) { col = c; }
+   void setLoc(const int loc);
    void set(const int r, const int c);
    bool isValid();
    void adjustRow(const int adjustRow, int next) { row += (adjustRow * next); }

@@ -81,7 +81,7 @@ void Piece::assignPosition(const char* position)
  *********************************************************************/
 void Piece::setEnPassantTurn(const int& turn)
 {
-   enPassantTurn = turn;
+   enPassantTurn = board.getCurrentTurn();
 }
 
 /*********************************************************************

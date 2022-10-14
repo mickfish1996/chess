@@ -33,4 +33,3 @@ public:
 
    friend class TestKing;
 };
-
