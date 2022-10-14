@@ -57,6 +57,9 @@
     <ClCompile Include="queen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="uiDraw.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="queen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="knight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

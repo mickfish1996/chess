@@ -4,6 +4,7 @@
 #include "king.h"
 #include "pawn.h"
 #include "bishop.h"
+#include "knight.h"
 #include "queen.h"
 #include <iostream>
 
@@ -112,6 +113,11 @@ void Board::fillBoard()
 
    board[0][3] = new Queen(0, 3, true);
    board[7][4] = new Queen(7, 4, false);
+
+   board[0][1] = new Knight(0, 1, true);
+   board[0][6] = new Knight(0, 6, true);
+   board[7][1] = new Knight(7, 1, false);
+   board[7][6] = new Knight(7, 6, false);
 
    for (int col = 0; col < 8; col++)
    {
