@@ -9,8 +9,6 @@
 #include "uiDraw.h"
 #include "piece.h"
 
-
-
 class Piece;
 
 class Board

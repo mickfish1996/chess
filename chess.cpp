@@ -11,6 +11,8 @@
 #include <fstream>        // for IFSTREAM
 #include <string>         // for STRING
 #include "test.h"
+#include "king.h"
+
 using namespace std;
 
 /***********************************************
@@ -80,195 +82,223 @@ inline bool isBlack(const char* board, int row, int col)
 
    return (piece >= 'A' && piece <= 'Z');
 }
+
 /*********************************************************
- * GET POSSIBLE MOVES
- * Determine all the possible moves for a given chess piece
+ * CONVERT POSSIBLE MOVES TO INT
+ * Converts all of the Possible moves in a set of type 
+ * Move to a set of type int.
  *********************************************************/
-set <int> getPossibleMoves(const char* board, int location)
+set<int> convertMovesToInt(const set<Move> possMoves)
 {
-   set <int> possible;
+   set<int> possible = { };
 
-   // return the empty set if there simply are no possible moves
-   if (location < 0 || location >= 64 || board[location] == ' ')
-      return possible;
-   int row = location / 8;  // current location row
-   int col = location % 8;  // current location column
-   int r;                   // the row we are checking
-   int c;                   // the column we are checking
-   bool amBlack = isBlack(board, row, col);
-
-   //
-   // PAWN
-   //
-   if (board[location] == 'P')
+   for (auto iter = possMoves.begin(); iter != possMoves.end(); iter++)
    {
-      c = col;
-      r = row - 2;
-      if (row == 6 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward two blank spaces
-      r = row - 1;
-      if (r >= 0 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward one black space
-      c = col - 1;
-      if (isWhite(board, r, c))
-         possible.insert(r * 8 + c);    // attack left
-      c = col + 1;
-      if (isWhite(board, r, c))
-         possible.insert(r * 8 + c);    // attack right
-      // what about en-passant and pawn promotion
+      int possLoc = iter->getDest().getLocation();
+      possible.insert(possLoc);
    }
-   if (board[location] == 'p')
-   {
-      c = col;
-      r = row + 2;
-      if (row == 1 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward two blank spaces
-      r = row + 1;
-      if (r < 8 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);    // forward one blank space
-      c = col - 1;
-      if (isBlack(board, r, c))
-         possible.insert(r * 8 + c);      // attack left
-      c = col + 1;
-      if (isBlack(board, r, c))
-         possible.insert(r * 8 + c);      // attack right
-      // what about en-passant and pawn promotion
-   }
-
-   //
-   // KNIGHT
-   //
-   if (board[location] == 'N' || board[location] == 'n')
-   {
-      RC moves[8] = 
-      {
-               {-1,  2}, { 1,  2},
-      {-2,  1},                    { 2,  1},
-      {-2, -1},                    { 2, -1},
-               {-1, -2}, { 1, -2}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // KING
-   //
-   if (board[location] == 'K' || board[location] == 'k')
-   {
-      RC moves[8] =
-      {
-         {-1,  1}, {0,  1}, {1,  1},
-         {-1,  0},          {1,  0},
-         {-1, -1}, {0, -1}, {1, -1}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-      // what about castling?
-   }
-
-   //
-   // QUEEN
-   //
-   if (board[location] == 'Q' || board[location] == 'q')
-   {
-      RC moves[8] =
-      {
-         {-1,  1}, {0,  1}, {1,  1},
-         {-1,  0},          {1,  0},
-         {-1, -1}, {0, -1}, {1, -1}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 && 
-                board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // ROOK
-   //
-   if (board[location] == 'R' || board[location] == 'r')
-   {
-      RC moves[4] =
-      {
-                  {0,  1},
-         {-1, 0},         {1, 0},
-                  {0, -1}
-      };
-      for (int i = 0; i < 4; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-            board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if (amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // BISHOP
-   //
-   if (board[location] == 'B' || board[location] == 'b')
-   {
-      RC moves[4] =
-      {
-         {-1,  1}, {1,  1},
-         {-1, -1}, {1, -1}
-      };
-      for (int i = 0; i < 4; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-            board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if (amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
+   
    return possible;
 }
+
+///*********************************************************
+// * GET POSSIBLE MOVES
+// * Determine all the possible moves for a given chess piece
+// *********************************************************/
+//set <int> getPossibleMoves(const char* board, int location)
+//{
+//   set <int> possible;
+//
+//   // return the empty set if there simply are no possible moves
+//   if (location < 0 || location >= 64 || board[location] == ' ')
+//      return possible;
+//   int row = location / 8;  // current location row
+//   int col = location % 8;  // current location column
+//   int r;                   // the row we are checking
+//   int c;                   // the column we are checking
+//   bool amBlack = isBlack(board, row, col);
+//
+//   //
+//   // PAWN
+//   //
+//   if (board[location] == 'P')
+//   {
+//      c = col;
+//      r = row - 2;
+//      if (row == 6 && board[r * 8 + c] == ' ')
+//         possible.insert(r * 8 + c);  // forward two blank spaces
+//      r = row - 1;
+//      if (r >= 0 && board[r * 8 + c] == ' ')
+//         possible.insert(r * 8 + c);  // forward one black space
+//      c = col - 1;
+//      if (isWhite(board, r, c))
+//         possible.insert(r * 8 + c);    // attack left
+//      c = col + 1;
+//      if (isWhite(board, r, c))
+//         possible.insert(r * 8 + c);    // attack right
+//      // what about en-passant and pawn promotion
+//   }
+//   if (board[location] == 'p')
+//   {
+//      c = col;
+//      r = row + 2;
+//      if (row == 1 && board[r * 8 + c] == ' ')
+//         possible.insert(r * 8 + c);  // forward two blank spaces
+//      r = row + 1;
+//      if (r < 8 && board[r * 8 + c] == ' ')
+//         possible.insert(r * 8 + c);    // forward one blank space
+//      c = col - 1;
+//      if (isBlack(board, r, c))
+//         possible.insert(r * 8 + c);      // attack left
+//      c = col + 1;
+//      if (isBlack(board, r, c))
+//         possible.insert(r * 8 + c);      // attack right
+//      // what about en-passant and pawn promotion
+//   }
+//
+//   //
+//   // KNIGHT
+//   //
+//   if (board[location] == 'N' || board[location] == 'n')
+//   {
+//      RC moves[8] = 
+//      {
+//               {-1,  2}, { 1,  2},
+//      {-2,  1},                    { 2,  1},
+//      {-2, -1},                    { 2, -1},
+//               {-1, -2}, { 1, -2}
+//      };
+//      for (int i = 0; i < 8; i++)
+//      {
+//         r = row + moves[i].row;
+//         c = col + moves[i].col;
+//         if ( amBlack && isNotBlack(board, r, c))
+//            possible.insert(r * 8 + c);
+//         if (!amBlack && isNotWhite(board, r, c))
+//            possible.insert(r * 8 + c);
+//      }
+//   }
+//
+//   //
+//   // KING
+//   //
+//   if (board[location] == 'K' || board[location] == 'k')
+//   {
+//      /*RC moves[8] =
+//      {
+//         {-1,  1}, {0,  1}, {1,  1},
+//         {-1,  0},          {1,  0},
+//         {-1, -1}, {0, -1}, {1, -1}
+//      };
+//      for (int i = 0; i < 8; i++)
+//      {
+//         r = row + moves[i].row;
+//         c = col + moves[i].col;
+//         if ( amBlack && isNotBlack(board, r, c))
+//            possible.insert(r * 8 + c);
+//         if (!amBlack && isNotWhite(board, r, c))
+//            possible.insert(r * 8 + c);
+//      }*/
+//
+//      Position pos;
+//      pos.setLoc(board[location]);
+//      King king;
+//      int row = location / 8;
+//      int col = location % 8;
+//      king.setWhiteColor(isNotBlack(board, row, col));
+//      possible = convertMovesToInt(king.getPossibleMoves(board));
+//
+//      // what about castling?
+//   }
+//
+//   //
+//   // QUEEN
+//   //
+//   if (board[location] == 'Q' || board[location] == 'q')
+//   {
+//      RC moves[8] =
+//      {
+//         {-1,  1}, {0,  1}, {1,  1},
+//         {-1,  0},          {1,  0},
+//         {-1, -1}, {0, -1}, {1, -1}
+//      };
+//      for (int i = 0; i < 8; i++)
+//      {
+//         r = row + moves[i].row;
+//         c = col + moves[i].col;
+//         while (r >= 0 && r < 8 && c >= 0 && c < 8 && 
+//                board[r * 8 + c] == ' ')
+//         {
+//            possible.insert(r * 8 + c);
+//            r += moves[i].row;
+//            c += moves[i].col;
+//         }
+//         if ( amBlack && isNotBlack(board, r, c))
+//            possible.insert(r * 8 + c);
+//         if (!amBlack && isNotWhite(board, r, c))
+//            possible.insert(r * 8 + c);
+//      }
+//   }
+//
+//   //
+//   // ROOK
+//   //
+//   if (board[location] == 'R' || board[location] == 'r')
+//   {
+//      RC moves[4] =
+//      {
+//                  {0,  1},
+//         {-1, 0},         {1, 0},
+//                  {0, -1}
+//      };
+//      for (int i = 0; i < 4; i++)
+//      {
+//         r = row + moves[i].row;
+//         c = col + moves[i].col;
+//         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
+//            board[r * 8 + c] == ' ')
+//         {
+//            possible.insert(r * 8 + c);
+//            r += moves[i].row;
+//            c += moves[i].col;
+//         }
+//         if (amBlack && isNotBlack(board, r, c))
+//            possible.insert(r * 8 + c);
+//         if (!amBlack && isNotWhite(board, r, c))
+//            possible.insert(r * 8 + c);
+//      }
+//   }
+//
+//   //
+//   // BISHOP
+//   //
+//   if (board[location] == 'B' || board[location] == 'b')
+//   {
+//      RC moves[4] =
+//      {
+//         {-1,  1}, {1,  1},
+//         {-1, -1}, {1, -1}
+//      };
+//      for (int i = 0; i < 4; i++)
+//      {
+//         r = row + moves[i].row;
+//         c = col + moves[i].col;
+//         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
+//            board[r * 8 + c] == ' ')
+//         {
+//            possible.insert(r * 8 + c);
+//            r += moves[i].row;
+//            c += moves[i].col;
+//         }
+//         if (amBlack && isNotBlack(board, r, c))
+//            possible.insert(r * 8 + c);
+//         if (!amBlack && isNotWhite(board, r, c))
+//            possible.insert(r * 8 + c);
+//      }
+//   }
+//
+//   return possible;
+//}
 
 /***************************************************
  * DRAW
@@ -311,8 +341,8 @@ bool move(Board* board, int posFrom, int posTo)
    std::set<Move> possiblePrevious;
    bool turn = false;
 
-   // Condition statement to see which colors turn it is to move if % 2 == 0 it is whites turn
-   // if 1 then it is blacks turn.
+   // Condition statement to see which color's turn it is to move; if % 2 == 0 it is white's turn,
+   // if 1 then it is black's turn.
    if (board->getCurrentTurn() % 2 == 0 && board->getPiece(posFrom / 8, posFrom % 8).isWhite())
    {
       // find the set of possible moves from our current location
@@ -326,13 +356,31 @@ bool move(Board* board, int posFrom, int posTo)
       turn = true;
    }
 
-   // If the move is in the potential moves and turn is true than that piece is able to move.
+   // If the move is in the potential moves and turn is true then that piece is able to move.
    if (possiblePrevious.find(Move(posFrom, posTo)) != possiblePrevious.end() && turn)
-   {     
+   {  
+      Move currentMove = Move(posFrom, posTo);
+      // Castling Logic
+      // If move type is with a King...
+      //if (currentMove.getType() == 'k')
+      if (board->getPiece(posFrom / 8, posFrom % 8).getType() == 'k')
+      {
+         //if (currentMove.getCastleQ())
+         // If Queen's side castle...
+         if (posTo == (posFrom - 2))
+         {
+            board->swap(0, 12);  // TODO: Fix Castling here.
+         }
+         //else if (currentMove.getCastleK())
+         // If King's side castle...
+         else if (posTo == (posFrom + 2))
+         {
+            board->swap(posTo + 1, posTo - 1);
+         }
+      }
       board->swap(posTo, posFrom);
       return true;      
    }
-
 
    return false;
 
@@ -352,11 +400,8 @@ void callBack(Interface *pUI,  void * board)
    // is the first step of every single callback function in OpenGL. 
    Board* pBoard = (Board*) board;
 
-   
-
    if (move(pBoard, pUI->getPreviousPosition(), pUI->getSelectPosition()))
       pUI->clearSelectPosition();
-
 
    else if (pUI->getSelectPosition() != -1)
    {
@@ -367,13 +412,11 @@ void callBack(Interface *pUI,  void * board)
          possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
    }
    
-   
+   // This being commented out seems to make no difference.
    //else
      // pUI->clearPreviousPosition();
-   //// draw the board
-   draw(pBoard, *pUI,possibleMoves);
-   
-
+   // draw the board
+   draw(pBoard, *pUI, possibleMoves);
 }
 
 /********************************************************

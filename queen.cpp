@@ -66,7 +66,8 @@ std::set<Move> Queen::getPossibleMoves(const Board& board)
                move.setPieceType(board.getPiece(possPos.getRow(), possPos.getCol()).getType());
                moves.insert(move);
 
-               //exit loop after a piece is encounterd
+               //exit loop after a piece is encountered
+               // TODO: Make the loop so that break is not needed.
                break;
             }
 
@@ -91,5 +92,3 @@ bool Queen::isValid(const int num)
       return false;
    return true;
 }
-
-

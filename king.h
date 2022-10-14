@@ -24,4 +24,3 @@ public:
 
    friend class TestKing;
 };
-
