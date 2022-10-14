@@ -117,7 +117,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
          // If possPiece is a pawn, and possPiece just moved two spaces, then make a move.
          if (possPiece.getType() == 'p' && possPiece.getNMoves() == 1)
          {
-            if (possPiece.getEnPassantTurn() == board.getCurrentTurn() - 1)
+            if (possPiece.getEnPassantTurn() == board.getCurrentTurn())
             {
                Move move = Move();
                move.setSource(this->getPosition());
