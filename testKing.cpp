@@ -1,4 +1,12 @@
-
+/***********************************************************************
+ * Source File:
+ *     Test King
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the unit tests for ensuring king movement is happeing
+ *     how it should be happening.
+ ************************************************************************/
 #include "testKing.h"
 #include <string>
 

@@ -1,3 +1,12 @@
+/***********************************************************************
+ * Source File:
+ *     Piece, Rook
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the Piece and rook class's filling constructors and 
+ *     defining all methods including getPossibleMoves
+ ************************************************************************/
 #include "piece.h"
 
 /*********************************************************************
@@ -65,11 +74,20 @@ void Piece::assignPosition(const char* position)
    this->position.set(row, col);
 }
 
+/*********************************************************************
+ * setEnpassantTurn
+ * Will take the integer value that was passed and set enpassantTurn
+ * to the turn number that was sent in.
+ *********************************************************************/
 void Piece::setEnPassantTurn(const int& turn)
 {
    enPassantTurn = turn;
 }
 
+/*********************************************************************
+ * Rook:: Default Constructor
+ * Will set all vaues to a default value.
+ *********************************************************************/
 Rook::Rook()
 {
    position = Position();
@@ -80,6 +98,11 @@ Rook::Rook()
    pieceType = 'r';
 }
 
+/*********************************************************************
+ * Rook:: Constructor
+ * Will set all vaues to a default value. and will set the position
+ * and the color of the piece
+ *********************************************************************/
 Rook::Rook(int row, int col, bool white)
 {
    position = Position(row, col);
@@ -89,6 +112,7 @@ Rook::Rook(int row, int col, bool white)
    enPassantTurn = 0;
    pieceType = 'r';
 }
+
 /*********************************************************************
  * Rook::Draw
  * Will draw the rook onto the screen
@@ -107,21 +131,29 @@ std::set<Move> Rook::getPossibleMoves(const Board & board)
 {
    std::set<Move> moves;
 
+   // A vector of all possible changes that the rook can make.
    std::vector<std::vector<int>> moveSet = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
 
    Position possPos = position;
    
+   // will go through all changes.
    for (int i = 0; i < moveSet.size(); i++)
    {
+      // changable position used for finding positions on the board.
       Position possPos = position;
+
+      // Because the piece can slide the loop is to see all spots on the board
+      // that are possible.
       for (int col = 0; col < 8; col++)
       {
          // Adjusting possiblePosition to represent every position in captureSet.
          possPos.adjustRow(moveSet[i][0], 1);
          possPos.adjustCol(moveSet[i][1]);
 
+         // Checks for valid row and col.
          if (isValid(possPos.getRow()) && isValid(possPos.getCol()))
          {
+            // checks if the spot is empty
             if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() == 's')
             {
                Move move;
@@ -130,6 +162,7 @@ std::set<Move> Rook::getPossibleMoves(const Board & board)
                moves.insert(move);
             }
 
+            // checks what kind of piece it is hitting and if it is the same color.
             if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() != 's' &&
                board.getPiece(possPos.getRow(), possPos.getCol()).isWhite() != isWhite())
             {
@@ -143,6 +176,7 @@ std::set<Move> Rook::getPossibleMoves(const Board & board)
                break;
             }
 
+            // if a piece of the same color is hit it cannot go any further.
             else if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() != 's' &&
                board.getPiece(possPos.getRow(), possPos.getCol()).isWhite() == isWhite())
                break;
@@ -156,6 +190,10 @@ std::set<Move> Rook::getPossibleMoves(const Board & board)
    return moves;
 }
 
+/*********************************************************************
+ * Rook:: isValid
+ * Will check to ensure the number given is between 0 and 8.
+ *********************************************************************/
 bool Rook::isValid(const int& num)
 {
    if (num < 0 || num > 7)

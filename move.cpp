@@ -1,8 +1,12 @@
-/******************************************************************************
- * MOVE
- * Contains all information regarding moves. Helps with Piece.getPossibleMoves
- * functions.
-******************************************************************************/
+/***********************************************************************
+ * Source File:
+ *     Move
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the Move class filling constructors and defining all
+ *     methods including getSmith.
+ ************************************************************************/
 #include "move.h"
 
 /***********************************************
@@ -15,12 +19,11 @@ Move::Move()
    dest = Position();
    pieceType = '0';    // Default of zero, for not specified.
 
-   isWhite = false;
+   White = false;
    capture = false;
    enpassant = false;
    promotion = false;
-   castleK = false;
-   castleQ = false;
+   castle = false;
 }
 
 /***********************************************
@@ -35,24 +38,24 @@ Move::Move(const Position& sourcePosition)
    pieceType = ' ';                  // Default of space
 
    capture = false;
-   isWhite = false;
+   White = false;
    enpassant = false;
    promotion = false;
-   castleK = false;
-   castleQ = false;
+   castle = false;
 }
 
 /***********************************************
- *
+ * Constructor
+ * will recieve a string input and then assign 
+ * that input to a move and destination.
  ***********************************************/
 Move::Move(const std::string move)
 {
-   isWhite = false;
+   White = false;
    capture = false;
    enpassant = false;
    promotion = false;
-   castleK = false;
-   castleQ = false;
+   castle = false;
    pieceType = ' ';
 
    const char* charMove = move.c_str();
@@ -65,6 +68,12 @@ Move::Move(const std::string move)
    }
 }
 
+/***********************************************
+ * Constructor
+ * Will recieve two location between 0 and 64
+ * and will then assign them to source and 
+ * destination.
+ ***********************************************/
 Move::Move(const int location1, const int location2)
 {
    int row1 = location1 / 8;
@@ -75,15 +84,19 @@ Move::Move(const int location1, const int location2)
    int col2 = location2 % 8;
    dest = Position(row2, col2);
    pieceType = '0';
-   isWhite = false;
+   White = false;
    capture = false;
    enpassant = false;
    promotion = false;
-   castleK = false;
-   castleQ = false;
+   castle = false;
 }
+
 /***********************************************
- *
+ * getSmith
+ * Will take the smith notations from the position
+ * classes and append them together and if the
+ * pieceType is not zero witll append the piece
+ * to the char.
  ***********************************************/
 std::string Move::getSmith() const
 {
@@ -95,15 +108,19 @@ std::string Move::getSmith() const
    return source.getSmith() + dest.getSmith();
 }
 
+/***********************************************
+ * operator==
+ * used to see if two moves are equal to one
+ * another.
+ ***********************************************/
 bool operator== (const Move& move1, const Move& move2)
 {
    return (move1.source == move2.source &&
       move1.dest == move2.dest &&
       move1.pieceType == move2.pieceType &&
-      move1.isWhite == move2.isWhite &&
+      move1.White == move2.White &&
       move1.capture == move2.capture &&
       move1.enpassant == move2.enpassant &&
       move1.promotion == move2.promotion &&
-      move1.castleK == move2.castleK &&
-      move1.castleQ == move2.castleQ);
+      move1.castle == move2.castle);
 }

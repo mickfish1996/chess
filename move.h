@@ -16,12 +16,11 @@ private:
    Position dest;
    char pieceType;
 
-   bool isWhite;
+   bool White;
    bool capture;
    bool enpassant;
    bool promotion;
-   bool castleK;
-   bool castleQ;
+   bool castle;
 
 public:
    Move();
@@ -31,16 +30,19 @@ public:
    Position getDest() const { return dest; }
    Position getSource() const { return source; }
    std::string getSmith() const;
+   bool isWhite() const { return White; }
+   bool isEnpassant() const { return enpassant; }
+   bool isPromotion() const { return promotion; }
+   bool isCastle() const { return castle; }
 
 
    void setSource(const Position sourcePos) { source = sourcePos; }
    void setDest(const Position destPos) { dest = destPos; }
-   void setWhiteColor(const bool whiteColor) { this->isWhite = whiteColor; }
+   void setWhiteColor(const bool whiteColor) { this->White = whiteColor; }
    void setCapture(const bool capture) { this->capture = capture; }
    void setEnPassant(const bool enpassant) { this->enpassant = enpassant; }
    void setPromotion(const bool promotion) { this->promotion = promotion; }
-   void setCastleK(const bool cCastle) { castleK = cCastle; }
-   void setCastleQ(const bool cCastle) { castleQ = cCastle; }
+   void setCastle(const bool cCastle) { castle = cCastle; }
    void setPieceType(const char piece) { this->pieceType = piece; }
 
 

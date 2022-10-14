@@ -23,7 +23,7 @@ public:
    int getCurrentTurn() const { return currentTurn; }
    void increaseTurn() { currentTurn++; }
    void draw(ogstream & gout) const;
-   void swap(const int pos1, const int pos2);
+   void swap(const Move & move);
 
    friend class TestPawn;
    friend class TestKing;

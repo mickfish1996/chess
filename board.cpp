@@ -1,3 +1,12 @@
+/***********************************************************************
+ * Source File:
+ *     Board
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the board class. fill the board array with pieces and
+ *     handle all movements in and out of the board.
+ ************************************************************************/
 #include "board.h"
 #include "piece.h"
 #include "space.h"
@@ -97,28 +106,33 @@ void Board::addPiece(Piece piece)
 ***************************************************************************/
 void Board::fillBoard()
 {
-   //delete board[0][4];
+   // Put kings on the board
    board[0][4] = new King(0, 4, true);
    board[7][3] = new King(7, 3, false);
 
+   // put the rooks on the board
    board[0][0] = new Rook(0, 0, true);
    board[0][7] = new Rook(0, 7, true);
    board[7][0] = new Rook(7, 0, false);
    board[7][7] = new Rook(7, 7, false);
 
+   // put the bishops on the board
    board[0][2] = new Bishop(0, 2, true);
    board[0][5] = new Bishop(0, 5, true);
    board[7][2] = new Bishop(7, 2, false);
    board[7][5] = new Bishop(7, 5, false);
 
+   // put the queens on the board
    board[0][3] = new Queen(0, 3, true);
    board[7][4] = new Queen(7, 4, false);
 
+   // Put the knight on the board
    board[0][1] = new Knight(0, 1, true);
    board[0][6] = new Knight(0, 6, true);
    board[7][1] = new Knight(7, 1, false);
    board[7][6] = new Knight(7, 6, false);
 
+   // puts all the pawns on the board.
    for (int col = 0; col < 8; col++)
    {
       board[1][col] = new Pawn(1, col, true);
@@ -157,31 +171,23 @@ std::set<Move> Board::setMoves(int row, int col, Board& board) const
  * Swap
  * This function is used to switch the pieces that are on the board.
  ***************************************************************************/
-void Board::swap(const int posTo, const int posFrom)
+void Board::swap(const Move & move)
 {
    increaseTurn();
    
 
-   int rowFrom = posFrom / 8;
-   int colFrom = posFrom % 8;
+   int rowFrom = move.getSource().getRow();
+   int colFrom = move.getSource().getCol();
 
-   int rowTo = posTo / 8;
-   int colTo = posTo % 8;
+   int rowTo = move.getDest().getRow();
+   int colTo = move.getDest().getCol();
 
    int next = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
 
-   // This handles the promotion of the white pawn
-   if (board[rowFrom][colFrom]->getType() == 'p' &&
-      board[rowFrom][colFrom]->isWhite() && posTo / 8 == 7)
+   // If the pawn is Being promoted it will upgrade the pawn to a Queen
+   if (move.isPromotion())
    {
-      board[rowTo][colTo] = new Queen(posTo / 8, posTo % 8, true);
-   }
-
-   // This handles the promotion of the black pawn
-   else if (board[rowFrom][colFrom]->getType() == 'p' &&
-      !board[rowFrom][colFrom]->isWhite() && posTo / 8 == 0)
-   {
-      board[rowTo][colTo] = new Queen(posTo / 8, posTo % 8, false);
+      board[rowTo][colTo] = new Queen(rowTo, colTo, move.isWhite());
    }
 
    // If the pawn moves two spaces this will update the EnPassant turn
@@ -193,11 +199,8 @@ void Board::swap(const int posTo, const int posFrom)
       board[rowTo][colTo]->setEnPassantTurn(currentTurn);
    }
 
-   // In order to see if the piece can En Passant
-   else if (board[rowFrom][colFrom]->getType() == 'p' &&
-      board[rowTo][colTo]->getType() == 's' &&
-      board[rowTo - next][colTo]->getType() == 'p' &&
-      board[rowTo - next][colTo]->isWhite() != board[rowFrom][colFrom]->isWhite())
+   // The pawn is able to enpassant, it moves to the space and sets the other pawn to space.
+   else if(move.isEnpassant())
    {
       board[rowTo][colTo] = board[rowFrom][colFrom];
       board[rowTo][colTo]->assignPosition(rowTo, colTo);
@@ -205,7 +208,35 @@ void Board::swap(const int posTo, const int posFrom)
       board[rowTo - next][colTo] = new Space(rowTo, colTo - next);
    }
 
+   // If able to castle This function will determine the destination of the resultant pieces.
+   else if (move.isCastle())
+   {
+      board[rowTo][colTo] = board[rowFrom][colFrom];
+      board[rowTo][colTo]->assignPosition(rowTo, colTo);
+      board[rowTo][colTo]->setTurn();
 
+      // This is used to determine where to put the rook after the king has moved.
+      int col;
+      if ((colFrom - colTo) > 0)
+      {
+         next = 1;
+         col = 0;
+      }
+      else
+      {
+         next = -1;
+         col = 7;
+      }
+         
+      // moves the rook into place
+      board[rowTo][colTo + next] = board[rowFrom][col];
+      board[rowTo][colTo + next]->assignPosition(rowTo, colTo + next);
+      board[rowTo][colTo + next]->setTurn();
+      board[rowFrom][col] = new Space(rowFrom, col);
+
+   }
+
+   // Any other move is handled with this function.
    else
    {
       board[rowTo][colTo] = board[rowFrom][colFrom];
@@ -213,6 +244,7 @@ void Board::swap(const int posTo, const int posFrom)
       board[rowTo][colTo]->setTurn();
    }
 
+   // sets the space that the piece is coming from to a space.
    board[rowFrom][colFrom] = new Space(rowFrom, colFrom);  
 
 }

@@ -1,6 +1,19 @@
+/***********************************************************************
+ * Source File:
+ *     Pawn
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the Pawn class filling constructors and defining all
+ *     methods including getPossibleMoves
+ ************************************************************************/
 #include "pawn.h"
 #include <vector>
 
+/***************************************************************************
+ * Default constructor
+ * will set all values to a default value
+ ***************************************************************************/
 Pawn::Pawn()
 {
    position = Position();
@@ -11,6 +24,11 @@ Pawn::Pawn()
    pieceType = 'p';
 }
 
+/***************************************************************************
+ * Constructor
+ * given the row, col, and boolean color this constructor will set the 
+ * position and the color of the pawn.
+ ***************************************************************************/
 Pawn::Pawn(int row, int col, bool white)
 {
    position = Position(row, col);
@@ -21,9 +39,10 @@ Pawn::Pawn(int row, int col, bool white)
    pieceType = 'p';
 }
 
-// TODO: Add sets for white and black pawns separately, or auto convert
-// white to black.   ///////////////////////////////////////////////////////
-// TODO: Check to make sure that we are checking for valid ranges in getPossibleMoves.
+/***************************************************************************
+ * getPossibleMoves
+ * Used to get all the places that the pawn is able to move on the board.
+ ***************************************************************************/
 std::set<Move> Pawn::getPossibleMoves(const Board& board)
 {
    // moveSet and captureSet are vectors in format of 

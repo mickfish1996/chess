@@ -1,16 +1,32 @@
-/******************************************************************************************
- *
- ******************************************************************************************/
+/***********************************************************************
+ * Source File:
+ *     Position
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the Position class filling constructors and
+ *     defining all methods that are needed.
+ ************************************************************************/
 
 #include "position.h"
 #include <sstream>
 
+/***********************************************
+ * Position
+ * This constructor will set the position
+ * based on the integers that were recieved.
+ ***********************************************/
 Position::Position(int r, int c)
 {
    row = r;
    col = c;
 }
 
+/***********************************************
+ * isValid
+ * will check and see that all the positions
+ * are in a valid place on the board.
+ ***********************************************/
 bool Position::isValid()
 {
    return (row >= 0 && row <= 7 && col >= 0 && col <= 7);

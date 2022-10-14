@@ -107,12 +107,11 @@ public:
       move.source = source;
       move.dest = dest;
 
-      move.isWhite = true;
+      move.White = true;
       move.capture = false;
       move.enpassant = false;
       move.promotion = false;
-      move.castleK = false;
-      move.castleQ = false;
+      move.castle = false;
       move.pieceType = piece;
 
       return move;
