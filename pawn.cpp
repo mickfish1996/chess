@@ -85,7 +85,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
             move.setWhiteColor(this->isWhite());
 
             // Check for Promotion
-            if (possPos.getRow() == 7 || possPos.getRow() == 1)
+            if (possPos.getRow() == 7 || possPos.getRow() == 0)
             {
                move.setPromotion(true);
             }
