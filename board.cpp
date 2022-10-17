@@ -44,7 +44,7 @@ Board::Board()
 ***************************************************************************/
 Board::Board(bool build)
 {
-   for (int row = 0; row < 8; row++)
+   for (int row = 2; row < 6; row++)
    {
       //std::vector<Piece> rowVector = {};
 
@@ -96,7 +96,7 @@ void Board::addPiece(Piece piece)
 {
    int col = piece.getCol();
    int row = piece.getRow();
-
+   
    board[row][col] = &piece;
 }
 
@@ -182,6 +182,8 @@ void Board::swap(const Move & move)
    int rowTo = move.getDest().getRow();
    int colTo = move.getDest().getCol();
 
+   delete(board[rowTo][colTo]);
+
    int next = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
 
    // If the pawn is Being promoted it will upgrade the pawn to a Queen
@@ -229,9 +231,12 @@ void Board::swap(const Move & move)
       }
          
       // moves the rook into place
+      
       board[rowTo][colTo + next] = board[rowFrom][col];
       board[rowTo][colTo + next]->assignPosition(rowTo, colTo + next);
       board[rowTo][colTo + next]->setTurn();
+
+      //delete(board[rowFrom][col]);
       board[rowFrom][col] = new Space(rowFrom, col);
 
    }
@@ -245,6 +250,8 @@ void Board::swap(const Move & move)
    }
 
    // sets the space that the piece is coming from to a space.
+
+   //delete(board[rowFrom][colFrom]);
    board[rowFrom][colFrom] = new Space(rowFrom, colFrom);  
 
 }
