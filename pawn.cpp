@@ -62,7 +62,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       // Adjusting possiblePosition to represent every position in moveSet.
       possPos.adjustRow(moveSet[i][0], whiteMultiplier);
       possPos.adjustCol(moveSet[i][1]);
-      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
+      if (possPos.isValid())
       {
          Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
 
@@ -94,7 +94,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       // Adjusting possiblePosition to represent every position in captureSet.
       possPos.adjustRow(captureSet[i][0], whiteMultiplier);
       possPos.adjustCol(captureSet[i][1]);
-      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
+      if (possPos.isValid())
       {
          Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
 
@@ -120,7 +120,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       // Adjusting possiblePosition to represent every position in enPassantSet.
       possPos.adjustRow(enPassantSet[i][0], whiteMultiplier);  // I don't understand why whiteMultiplier is necessary, since enPassantSet[any][0] == 0.
       possPos.adjustCol(enPassantSet[i][1]);
-      if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
+      if (possPos.isValid())
       {
          Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
 
@@ -143,15 +143,4 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
    }
 
    return possibleMoves;
-}
-
-/***************************************************************************
- * isValid
- * will confirm that all positions are in a valid spot to move.
- ***************************************************************************/
-bool Pawn::isValid(const int num)
-{
-   if (num < 0 || num > 7)
-      return false;
-   return true;
 }

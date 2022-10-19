@@ -57,7 +57,7 @@ std::set<Move> Queen::getPossibleMoves(const Board& board)
          possPos.adjustCol(moveSet[i][1]);
 
          // Checks for valid row and col.
-         if (isValid(possPos.getRow()) && isValid(possPos.getCol()))
+         if (possPos.isValid())
          {
             // checks if the spot is empty
             if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() == 's')
@@ -92,15 +92,4 @@ std::set<Move> Queen::getPossibleMoves(const Board& board)
    }
 
    return moves;
-}
-
-/***************************************************************************
- * Queen
- * will determine if a number is in range of the board
- ***************************************************************************/
-bool Queen::isValid(const int num)
-{
-   if (num < 0 || num > 7)
-      return false;
-   return true;
 }

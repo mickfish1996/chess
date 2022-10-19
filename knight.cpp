@@ -52,8 +52,8 @@ std::set<Move> Knight::getPossibleMoves(const Board& board)
       possPos.adjustRow(moveSet[i][0], 1);
       possPos.adjustCol(moveSet[i][1]);
 
-      // Checks for all valid movemeints on the board.
-      if (isValid(possPos.getRow()) && isValid(possPos.getCol()))
+      // Checks for all valid movements on the board.
+      if (possPos.isValid())
       { 
          // Checks to see if the spot is empty.
          if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() == 's')
@@ -79,15 +79,4 @@ std::set<Move> Knight::getPossibleMoves(const Board& board)
 
    // Returns the final set of Moves.
    return moves;
-}
-
-/***************************************************************************
- * Knight
- * will determine if a number is in range of the board
- ***************************************************************************/
-bool Knight::isValid(const int num)
-{
-   if (num < 0 || num > 7)
-      return false;
-   return true;
 }

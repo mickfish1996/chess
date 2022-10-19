@@ -114,7 +114,7 @@ std::set<Move> King::getPossibleMoves(const Board& board)
       for (int col = position.getCol() - 1; col <= position.getCol() + 1; col++)
       {
          // checks if the possible spot is a valid space on the board.
-         if (isValid(row) && isValid(col))
+         if (Position(row, col).isValid())
          {
             // Sees if the spot is just a space
             if (board.getPiece(row, col).getType() == 's')
@@ -123,7 +123,6 @@ std::set<Move> King::getPossibleMoves(const Board& board)
                move.setSource(getPosition());
                move.setDest(Position(row, col));
                moves.insert(move);
-
             }
 
             // Sees what color the adjacent piece is and what type it is.
@@ -135,21 +134,9 @@ std::set<Move> King::getPossibleMoves(const Board& board)
                move.setPieceType(board.getPiece(row, col).getType());
                moves.insert(move);
             }
-
          }
       }
    }
    // returns the final set of moves that was generated.
    return moves;
-}
-
-/***************************************************************************
- * isValid
- * will confirm that all positions are in a valid spot to move.
- ***************************************************************************/
-bool King::isValid(const int num)
-{
-   if (num < 0 || num > 7)
-      return false;
-   return true;
 }

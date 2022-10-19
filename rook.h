@@ -13,6 +13,4 @@ public:
    std::set<Move> getPossibleMoves(const Board& board) override;
 
    friend class TestKing;
-private:
-   bool isValid(const int& num);
 };

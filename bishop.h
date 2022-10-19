@@ -22,7 +22,5 @@ public:
    Bishop();
    Bishop(const int& row, const int& col, const bool& whiteColor);
    std::set<Move> getPossibleMoves(const Board& board) override;
-   bool isValid(const int row);
    void draw(ogstream& gout) const override { gout.drawBishop(position.getLocation(), !isWhite()); }
 };
-

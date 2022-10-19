@@ -25,6 +25,4 @@ public:
 private:
    friend class TestKing;
    friend class TestPawn;
-
-   bool isValid(const int num);
 };

@@ -58,7 +58,7 @@ std::set<Move> Rook::getPossibleMoves(const Board& board)
          possPos.adjustCol(moveSet[i][1]);
 
          // Checks for valid row and col.
-         if (isValid(possPos.getRow()) && isValid(possPos.getCol()))
+         if (possPos.isValid())
          {
             // checks if the spot is empty
             if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() == 's')
@@ -92,18 +92,5 @@ std::set<Move> Rook::getPossibleMoves(const Board& board)
       }
    }
 
-
-
    return moves;
-}
-
-/*********************************************************************
- * Rook:: isValid
- * Will check to ensure the number given is between 0 and 8.
- *********************************************************************/
-bool Rook::isValid(const int& num)
-{
-   if (num < 0 || num > 7)
-      return false;
-   return true;
 }

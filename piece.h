@@ -49,7 +49,8 @@ public:
    void setEnPassantTurn(const int& turn);
    void setWhiteColor(const bool whiteColor) { this->whiteColor = whiteColor; }
    virtual void draw(ogstream& gout) const {}
-   void move() {}
+
+   bool isValid() { return position.isValid(); }
    bool isWhite() const { return whiteColor; }
    void assignPosition(const char* position);
    void assignPosition(const int row, const int col) { position = Position(row, col); }
