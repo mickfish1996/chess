@@ -19,7 +19,7 @@ class Knight : public Piece
 {
 public:
    Knight();
-   Knight(int row, int col, bool white);
+   Knight(const int &row, const int &col, const bool &whiteColor);
    std::set<Move> getPossibleMoves(const Board& board) override;
    bool isValid(const int num);
    void draw(ogstream& gout) const override { gout.drawKnight(position.getLocation(), !isWhite()); }

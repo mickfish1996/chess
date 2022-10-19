@@ -19,7 +19,7 @@ class Pawn : public Piece
 {
 public:
    Pawn();
-   Pawn(int row, int col, bool black);
+   Pawn(const int &row, const int &col, const bool &whiteColor);
    std::set<Move> getPossibleMoves(const Board& board);
    void draw(ogstream& gout) const override { gout.drawPawn(position.getLocation(), !isWhite()); }
 private:

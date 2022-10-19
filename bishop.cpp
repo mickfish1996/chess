@@ -14,12 +14,8 @@
  * Bishop
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
-Bishop::Bishop()
+Bishop::Bishop() : Piece()
 {
-   position = Position();
-   whiteColor = true;
-   lastMove = Move();
-   nMoves = 0;
    pieceType = 'b';
 }
 
@@ -27,12 +23,9 @@ Bishop::Bishop()
  * King
  * will set all the values to the included variables
  ***************************************************************************/
-Bishop::Bishop(int row, int col, bool white)
+Bishop::Bishop(const int &row, const int &col, const bool &whiteColor) 
+   : Piece(row, col, whiteColor)
 {
-   position = Position(row, col);
-   whiteColor = white;
-   lastMove = Move();
-   nMoves = 0;
    pieceType = 'b';
 }
 

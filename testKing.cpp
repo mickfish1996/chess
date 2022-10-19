@@ -9,6 +9,7 @@
  ************************************************************************/
 #include "testKing.h"
 #include <string>
+#include "rook.h"
 
 
 void TestKing::run()

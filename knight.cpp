@@ -13,26 +13,19 @@
  * Knight
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
-Knight::Knight()
+Knight::Knight() : Piece()
 {
-   position = Position();
-   whiteColor = true;
-   lastMove = Move();
-   nMoves = 0;
-   pieceType = 'k';
+   pieceType = 'n';
 }
 
 /***************************************************************************
  * Knight
  * will set all the values to the included variables
  ***************************************************************************/
-Knight::Knight(int row, int col, bool white)
+Knight::Knight(const int &row, const int &col, const bool &whiteColor)
+   : Piece(row, col, whiteColor)
 {
-   position = Position(row, col);
-   whiteColor = white;
-   lastMove = Move();
-   nMoves = 0;
-   pieceType = 'k';
+   pieceType = 'n';
 }
 
 /***************************************************************************

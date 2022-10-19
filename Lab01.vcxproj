@@ -108,6 +108,7 @@
     <ClCompile Include="piece.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="queen.cpp" />
+    <ClCompile Include="rook.cpp" />
     <ClCompile Include="space.cpp" />
     <ClCompile Include="testKing.cpp" />
     <ClCompile Include="uiDraw.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="piece.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="queen.h" />
+    <ClInclude Include="rook.h" />
     <ClInclude Include="space.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="testKing.h" />

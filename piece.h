@@ -34,6 +34,7 @@ protected:
    int enPassantTurn;
 public:
    Piece();
+   Piece(const int row, const int col, const bool whiteColor);
    int getRow() { return position.getRow(); }
    int getCol() { return position.getCol(); }
    Position getPosition() const { return position; }
@@ -54,22 +55,4 @@ public:
    void assignPosition(const int row, const int col) { position = Position(row, col); }
    void setTurn() { nMoves++; }
    bool operator== (Piece rhs) const { return pieceType == rhs.getType(); }
-};
-
-
-/***********************************
-* Rook Class
-***********************************/
-class Rook : public Piece
-{
-public:
-   friend class TestKing;
-   Rook();
-   Rook(int row, int col, bool white);
-   void draw(ogstream& gout) const;
-   std::set<Move> getPossibleMoves(const Board& board) override;
-
-private:
-   bool isValid(const int& num);
-
 };

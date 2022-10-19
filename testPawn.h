@@ -346,8 +346,9 @@ public:
       move2.enpassant = true;
       std::set<Move> verifyMoves = { move1, move2 };
 
-      // Incrementing turn to simulate the next player's move.
-      board.currentTurn++;
+      // No need to increment the turn here since the logic for increasing turns happens
+      // just before the swap, which is after getPossibleMoves is called.
+      //board.currentTurn++;
 
       // Exercise
       moves = wPawn.getPossibleMoves(board);

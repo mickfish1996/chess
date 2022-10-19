@@ -15,6 +15,7 @@
 #include "bishop.h"
 #include "knight.h"
 #include "queen.h"
+#include "rook.h"
 #include <iostream>
 
 /***************************************************************************
@@ -89,8 +90,8 @@ Piece Board::getPiece(const int& row, const int& col) const
 *************************************/
 
 /***************************************************************************
-* add Piece
-* Given a row and column, places the piece at that location on the board.
+* ADD Piece
+* Given a piece, places that piece at the piece's location on the board.
 ***************************************************************************/
 void Board::addPiece(Piece piece)
 {
@@ -101,8 +102,8 @@ void Board::addPiece(Piece piece)
 }
 
 /***************************************************************************
-* fill Board
-* will add all pieces to the board
+* FILL BOARD
+* Fills the board with the default pieces.
 ***************************************************************************/
 void Board::fillBoard()
 {
@@ -138,15 +139,11 @@ void Board::fillBoard()
       board[1][col] = new Pawn(1, col, true);
       board[6][col] = new Pawn(6, col, false);
    }
-
-
-   
-
 }
 
 /***************************************************************************
- * King
- * will set all the values to the defaults because there were no inputs
+ * DRAW
+ * Draws the board to the ogstream.
  ***************************************************************************/
 void Board::draw(ogstream & gout) const
 {
@@ -159,8 +156,9 @@ void Board::draw(ogstream & gout) const
 }
 
 /***************************************************************************
- * getMoves
+ * GET MOVES?
  * This function is used to get around the splicing to the base class
+ * TODO: Change the name from setMoves to getMoves???
  ***************************************************************************/
 std::set<Move> Board::setMoves(int row, int col, Board& board) const
 {
@@ -168,14 +166,13 @@ std::set<Move> Board::setMoves(int row, int col, Board& board) const
 }
 
 /***************************************************************************
- * Swap
+ * SWAP
  * This function is used to switch the pieces that are on the board.
  ***************************************************************************/
 void Board::swap(const Move & move)
 {
    increaseTurn();
    
-
    int rowFrom = move.getSource().getRow();
    int colFrom = move.getSource().getCol();
 

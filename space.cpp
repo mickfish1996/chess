@@ -9,23 +9,20 @@
 #include "space.h"
 
 /***************************************************************************
- * Space
- * will set all the values to the included variables
+ * Queen
+ * will set all the variables to their default values.
  ***************************************************************************/
-Space::Space(const int& row, const int& col)
+Space::Space() : Piece()
 {
-   position.setRow(row);
-   position.setCol(col);
    pieceType = 's';
 }
 
 /***************************************************************************
- * Queen
- * will set all the variables to their default values.
+ * Space
+ * will set all the values to the included variables
  ***************************************************************************/
-Space::Space()
+Space::Space(const int& row, const int& col)
+   : Piece(row, col, true)
 {
-   position.setRow(0);
-   position.setCol(0);
    pieceType = 's';
 }

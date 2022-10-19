@@ -13,26 +13,18 @@
  * King
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
-King::King()
+King::King() : Piece()
 {
-   position = Position();
-   whiteColor = true;
-   lastMove = Move();
-   nMoves = 0;
    pieceType = 'k';
-   /*const char pieceType = 'k';*/
 }
 
 /***************************************************************************
  * King
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
-King::King(int row, int col, bool white)
+King::King(const int &row, const int &col, const bool &whiteColor)
+   : Piece(row, col, whiteColor)
 {
-   position = Position(row, col);
-   lastMove = Move();
-   nMoves = 0;
-   whiteColor = white;
    pieceType = 'k';
 }
 

@@ -14,13 +14,8 @@
  * Default constructor
  * will set all values to a default value
  ***************************************************************************/
-Pawn::Pawn()
+Pawn::Pawn() : Piece()
 {
-   position = Position();
-   whiteColor = true;
-   lastMove = Move();
-   nMoves = 0;
-   enPassantTurn = 0;
    pieceType = 'p';
 }
 
@@ -29,13 +24,9 @@ Pawn::Pawn()
  * given the row, col, and boolean color this constructor will set the 
  * position and the color of the pawn.
  ***************************************************************************/
-Pawn::Pawn(int row, int col, bool white)
+Pawn::Pawn(const int &row, const int &col, const bool &whiteColor)
+   : Piece(row, col, whiteColor)
 {
-   position = Position(row, col);
-   whiteColor = white;
-   lastMove = Move();
-   nMoves = 0;
-   enPassantTurn = 0;
    pieceType = 'p';
 }
 
@@ -48,7 +39,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
    // moveSet and captureSet are vectors in format of 
    // { {adjustRow, adjustCol} }.
 
-   int next = (whiteColor ? 1 : -1);
+   int whiteMultiplier = (whiteColor ? 1 : -1);
    std::vector<std::vector<int>> captureSet = { {1, -1}, {1, 1} };
    std::vector<std::vector<int>> enPassantSet = { {0, -1}, {0, 1} };
    std::vector<std::vector<int>> moveSet;
@@ -69,7 +60,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in moveSet.
-      possPos.adjustRow(moveSet[i][0], next);
+      possPos.adjustRow(moveSet[i][0], whiteMultiplier);
       possPos.adjustCol(moveSet[i][1]);
       if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
@@ -101,7 +92,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in captureSet.
-      possPos.adjustRow(captureSet[i][0], next);
+      possPos.adjustRow(captureSet[i][0], whiteMultiplier);
       possPos.adjustCol(captureSet[i][1]);
       if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
@@ -127,20 +118,20 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in enPassantSet.
-      possPos.adjustRow(enPassantSet[i][0], next);
+      possPos.adjustRow(enPassantSet[i][0], whiteMultiplier);  // I don't understand why whiteMultiplier is necessary, since enPassantSet[any][0] == 0.
       possPos.adjustCol(enPassantSet[i][1]);
       if (isValid(possPos.getCol()) && isValid(possPos.getRow()))
       {
          Piece possPiece = board.getPiece(possPos.getRow(), possPos.getCol());
 
          // If possPiece is a pawn, and possPiece just moved two spaces, then make a move.
-         if (possPiece.getType() == 'p' && possPiece.getNMoves() == 1)
+         if (possPiece.getType() == 'p' && possPiece.getNMoves() == 1)     // && of opposite type?
          {
-            if (possPiece.getEnPassantTurn() == board.getCurrentTurn())
+            if (possPiece.getEnPassantTurn() == board.getCurrentTurn()) //
             {
                Move move = Move();
                move.setSource(this->getPosition());
-               possPos.adjustRow(moveSet[0][0], next);   // Auto adjust for when change moveSet for Black Pieces.n
+               possPos.adjustRow(moveSet[0][0], whiteMultiplier);   // Auto adjust for when change moveSet for Black Pieces.
                move.setDest(possPos);
                move.setPieceType(this->getType());
                move.setWhiteColor(this->isWhite());

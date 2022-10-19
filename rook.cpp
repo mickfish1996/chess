@@ -1,45 +1,46 @@
-/***********************************************************************
- * Source File:
- *     Queen
- * Author:
- *     Kyler Melor, Michael FIsher
- * Description:
- *     Implement the Queen class filling constructors and
- *     defining all methods that are needed.
- ************************************************************************/
-#include "queen.h"
+#include "rook.h"
 
-/***************************************************************************
- * Queen
- * will set all the values to the defaults because there were no inputs
- ***************************************************************************/
-Queen::Queen() : Piece()
+/*********************************************************************
+ * Rook:: Default Constructor
+ * Will set all vaues to a default value.
+ *********************************************************************/
+Rook::Rook() : Piece()
 {
-   pieceType = 'q';
+   pieceType = 'r';
 }
 
-/***************************************************************************
- * Queen
- * will set all the values to the included variables
- ***************************************************************************/
-Queen::Queen(const int &row, const int &col, const bool &whiteColor)
+/*********************************************************************
+ * Rook Constructor
+ * Will set all vaues to a default value. and will set the position
+ * and the color of the piece
+ *********************************************************************/
+Rook::Rook(const int &row, const int &col, const bool &whiteColor) 
    : Piece(row, col, whiteColor)
 {
-   pieceType = 'q';
+   pieceType = 'r';
 }
 
-/***************************************************************************
- * Queen
- * will return all of the possible moves for the board
- ***************************************************************************/
-std::set<Move> Queen::getPossibleMoves(const Board& board)
+/*********************************************************************
+ * Rook::Draw
+ * Will draw the rook onto the screen
+ *********************************************************************/
+void Rook::draw(ogstream& gout) const
+{
+   gout.drawRook(position.getLocation(), !isWhite());
+}
+
+/*********************************************************************
+ * Rook::getPossibleMoves
+ * Will get all the possible moves for the rook and return a set
+ *********************************************************************/
+
+std::set<Move> Rook::getPossibleMoves(const Board& board)
 {
    std::set<Move> moves;
 
-   // A vector of all possible movement vectors.
-   std::vector<std::vector<int>> moveSet = { {1, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+   // A vector of all possible changes that the rook can make.
+   std::vector<std::vector<int>> moveSet = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
 
-   // Position used for finding all possible moves.
    Position possPos = position;
 
    // will go through all changes.
@@ -78,8 +79,7 @@ std::set<Move> Queen::getPossibleMoves(const Board& board)
                move.setPieceType(board.getPiece(possPos.getRow(), possPos.getCol()).getType());
                moves.insert(move);
 
-               //exit loop after a piece is encountered
-               // TODO: Make the loop so that break is not needed.
+               //exit loop after a piece is encounterd
                break;
             }
 
@@ -87,18 +87,21 @@ std::set<Move> Queen::getPossibleMoves(const Board& board)
             else if (board.getPiece(possPos.getRow(), possPos.getCol()).getType() != 's' &&
                board.getPiece(possPos.getRow(), possPos.getCol()).isWhite() == isWhite())
                break;
+
          }
       }
    }
 
+
+
    return moves;
 }
 
-/***************************************************************************
- * Queen
- * will determine if a number is in range of the board
- ***************************************************************************/
-bool Queen::isValid(const int num)
+/*********************************************************************
+ * Rook:: isValid
+ * Will check to ensure the number given is between 0 and 8.
+ *********************************************************************/
+bool Rook::isValid(const int& num)
 {
    if (num < 0 || num > 7)
       return false;
