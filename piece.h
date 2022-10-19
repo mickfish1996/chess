@@ -32,6 +32,8 @@ protected:
    int nMoves;
    char pieceType;
    int enPassantTurn;
+   std::vector<std::vector<int>> moveSet;
+
 public:
    Piece();
    Piece(const int row, const int col, const bool whiteColor);
