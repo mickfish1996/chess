@@ -37,29 +37,6 @@ Board::Board()
 }
 
 /***************************************************************************
-* CONSTRUCTOR
-* The Default Constructor creates a board with all the Pieces in their
-* starting locations.
-***************************************************************************/
-Board::Board(bool build)
-{
-   for (int row = 2; row < 6; row++)
-   {
-      //std::vector<Piece> rowVector = {};
-
-      for (int col = 0; col < 8; col++)
-      {
-         board[row][col] = new Space(row, col);
-         //rowVector.push_back(emptySpace);
-      }
-
-      //board.push_back(rowVector);
-   }
-   fillBoard();
-   currentTurn = 0;
-}
-
-/***************************************************************************
 * GET PIECE
 * Given a row and column, returns the piece at that location on the board.
 ***************************************************************************/
@@ -105,6 +82,14 @@ void Board::addPiece(Piece piece)
 ***************************************************************************/
 void Board::fillBoard()
 {
+   for (int i = 0; i < 8; i++)
+   {
+      delete board[0][i];
+      delete board[1][i];
+      delete board[6][i];
+      delete board[7][i];
+   }
+
    // Put kings on the board
    board[0][4] = new King(0, 4, true);
    board[7][3] = new King(7, 3, false);
