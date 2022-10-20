@@ -30,12 +30,3 @@ Rook::Rook(const int &row, const int &col, const bool &whiteColor)
    pieceType = 'r';
    moveSet = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
 }
-
-/*********************************************************************
- * Rook::Draw
- * Will draw the rook onto the screen
- *********************************************************************/
-void Rook::draw(ogstream& gout) const
-{
-   gout.drawRook(position.getLocation(), !isWhite());
-}
