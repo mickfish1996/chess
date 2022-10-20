@@ -1,3 +1,12 @@
+/***********************************************************************
+ * Source File:
+ *     Rook
+ * Author:
+ *     Kyler Melor, Michael FIsher
+ * Description:
+ *     Implement the Rook class filling constructors along with all other 
+ *     methods not able to fit in the header file.
+ ************************************************************************/
 #include "rook.h"
 
 /*********************************************************************
