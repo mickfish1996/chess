@@ -20,7 +20,7 @@
 
 /***************************************************************************
 * DEFAULT CONSTRUCTOR
-* The Default Constructor creates an empty board.
+* The Default Constructor creates an empty board with only spaces.
 ***************************************************************************/
 Board::Board()
 {
@@ -31,17 +31,15 @@ Board::Board()
       for (int col = 0; col < 8; col++)
       {
          board[row][col] = new Space(row, col);
-         //rowVector.push_back(emptySpace);
       }
-
-      //board.push_back(rowVector);
    }
       currentTurn = 0;
 }
 
 /***************************************************************************
-* DEFAULT CONSTRUCTOR
-* The Default Constructor creates an empty board.
+* CONSTRUCTOR
+* The Default Constructor creates a board with all the Pieces in their
+* starting locations.
 ***************************************************************************/
 Board::Board(bool build)
 {
