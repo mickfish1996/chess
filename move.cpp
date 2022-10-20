@@ -92,7 +92,7 @@ Move::Move(const int location1, const int location2)
 }
 
 /***********************************************
- * getSmith
+ * GET SMITH
  * Will take the smith notations from the position
  * classes and append them together and if the
  * pieceType is not zero witll append the piece

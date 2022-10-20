@@ -1,6 +1,6 @@
 /***********************************************************************
  * Source File:
- *     Position
+ *     POSITION
  * Author:
  *     Kyler Melor, Michael FIsher
  * Description:
@@ -12,7 +12,7 @@
 #include <sstream>
 
 /***********************************************
- * Position
+ * POSITION
  * This constructor will set the position
  * based on the integers that were recieved.
  ***********************************************/
@@ -23,7 +23,7 @@ Position::Position(int r, int c)
 }
 
 /***********************************************
- * isValid
+ * IS VALID
  * will check and see that all the positions
  * are in a valid place on the board.
  ***********************************************/
@@ -33,7 +33,7 @@ bool Position::isValid()
 }
 
 /***********************************************
- * Position
+ * POSITION
  * This constructor will set the position
  * based on the string that is recieved.
  ***********************************************/
@@ -63,7 +63,7 @@ Position::Position(const char* move)
 }
 
 /***********************************************
- * getSmith
+ * GET SMITH
  * Will return the position in smith notation
  ***********************************************/
 std::string Position::getSmith() const
@@ -101,7 +101,7 @@ std::string Position::getSmith() const
 }
 
 /***********************************************
- * getLocation
+ * GET LOCATION
  * Will return the position in smith notation
  ***********************************************/
 int Position:: getLocation() const
@@ -110,7 +110,7 @@ int Position:: getLocation() const
 }
 
 /***********************************************
- * set
+ * SET
  * Will set the row and col
  ***********************************************/
 void Position::set(const int r, const int c)

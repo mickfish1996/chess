@@ -9,7 +9,7 @@
 #include "space.h"
 
 /***************************************************************************
- * Queen
+ * DEFAULT CONSTRUCTOR
  * will set all the variables to their default values.
  ***************************************************************************/
 Space::Space() : Piece()
@@ -18,7 +18,7 @@ Space::Space() : Piece()
 }
 
 /***************************************************************************
- * Space
+ * CONSTRUCTOR
  * will set all the values to the included variables
  ***************************************************************************/
 Space::Space(const int& row, const int& col)

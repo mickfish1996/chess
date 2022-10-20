@@ -10,7 +10,7 @@
 #include "knight.h"
 
 /***************************************************************************
- * Knight
+ * DEFAULT CONSTRUCTOR
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
 Knight::Knight() : Piece()
@@ -19,7 +19,7 @@ Knight::Knight() : Piece()
 }
 
 /***************************************************************************
- * Knight
+ * CONSTRUCTOR
  * will set all the values to the included variables
  ***************************************************************************/
 Knight::Knight(const int &row, const int &col, const bool &whiteColor)
@@ -29,7 +29,7 @@ Knight::Knight(const int &row, const int &col, const bool &whiteColor)
 }
 
 /***************************************************************************
- * Knight
+ * GET POSSIBLE MOVES
  * will return all of the possible moves for the board
  ***************************************************************************/
 std::set<Move> Knight::getPossibleMoves(const Board& board)

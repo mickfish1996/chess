@@ -41,7 +41,7 @@ Piece::Piece(const int row, const int col, const bool whiteColor)
 }
 
 /*********************************************************************
- * getPossibleMoves
+ * GET POSSIBLE MOVES
  * Will return all the possible moves for the piece
  *********************************************************************/
 std::set<Move> Piece::getPossibleMoves(const Board& board)
@@ -104,7 +104,7 @@ std::set<Move> Piece::getPossibleMoves(const Board& board)
 }
 
 /*********************************************************************
- * assignPosition
+ * ASSIGN POSITION
  * Will take the char position given to the piece and will set the 
  * position based off of that.
  *********************************************************************/
@@ -144,7 +144,7 @@ void Piece::assignPosition(const char* position)
 }
 
 /*********************************************************************
- * setEnpassantTurn
+ * SET ENPASSANT TURN
  * Will take the integer value that was passed and set enpassantTurn
  * to the turn number that was sent in.
  *********************************************************************/

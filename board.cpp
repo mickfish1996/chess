@@ -156,11 +156,10 @@ void Board::draw(ogstream & gout) const
 }
 
 /***************************************************************************
- * GET MOVES?
+ * GET MOVES
  * This function is used to get around the splicing to the base class
- * TODO: Change the name from setMoves to getMoves???
  ***************************************************************************/
-std::set<Move> Board::setMoves(int row, int col, Board& board) const
+std::set<Move> Board::getMoves(int row, int col, Board& board) const
 {
    return this->board[row][col]->getPossibleMoves(board);
 }

@@ -10,7 +10,7 @@
 #include "bishop.h"
 
 /***************************************************************************
- * Bishop
+ * DEFAULT CONSTRUCTOR
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
 Bishop::Bishop() : Piece()
@@ -20,7 +20,7 @@ Bishop::Bishop() : Piece()
 }
 
 /***************************************************************************
- * King
+ * CONSTRUCTOR
  * will set all the values to the included variables
  ***************************************************************************/
 Bishop::Bishop(const int &row, const int &col, const bool &whiteColor) 

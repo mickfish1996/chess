@@ -40,7 +40,7 @@ public:
    friend class TestKing;
 
    // calls all getPossible move class for a funtion.
-   std::set<Move> setMoves(int row, int col, Board& board) const;
+   std::set<Move> getMoves(int row, int col, Board& board) const;
 
    // overriding operators
    const Piece& operator[] (const Position& pos) const { return *board[pos.getRow()][pos.getCol()]; }

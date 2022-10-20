@@ -71,13 +71,13 @@ bool move(Board* board, int posFrom, int posTo)
    if (board->getCurrentTurn() % 2 == 0 && board->getPiece(posFrom / 8, posFrom % 8).isWhite())
    {
       // find the set of possible moves from our current location
-      possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
+      possiblePrevious = board->getMoves(posFrom / 8, posFrom % 8, *board);
       turn = true;
    }   
    else if (board->getCurrentTurn() % 2 == 1 && board->getPiece(posFrom / 8, posFrom % 8).isWhite() != true)
    {
       // find the set of possible moves from our current location
-      possiblePrevious = board->setMoves(posFrom / 8, posFrom % 8, *board);
+      possiblePrevious = board->getMoves(posFrom / 8, posFrom % 8, *board);
       turn = true;
    }
 
@@ -113,10 +113,10 @@ void callBack(Interface *pUI,  void * board)
    else if (pUI->getSelectPosition() != -1)
    {
       if(pBoard->getCurrentTurn() % 2 == 0 && pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).isWhite())
-         possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+         possibleMoves = pBoard->getMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
 
       if (pBoard->getCurrentTurn() % 2 == 1 && !pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).isWhite())
-         possibleMoves = pBoard->setMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
+         possibleMoves = pBoard->getMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
    }
    
    // This being commented out seems to make no difference.

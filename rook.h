@@ -9,10 +9,10 @@
 #pragma once
 #include "piece.h"
 
-/***********************************
+/************************************************************************
  * Rook Class
  * The Rook class contains information needed specifically for Rook.
- ***********************************/
+ ************************************************************************/
 class Rook : public Piece
 {
 public:

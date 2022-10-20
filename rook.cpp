@@ -10,7 +10,7 @@
 #include "rook.h"
 
 /*********************************************************************
- * Rook:: Default Constructor
+ * DEFAULT CONSTRUCTOR
  * Will set all vaues to a default value.
  *********************************************************************/
 Rook::Rook() : Piece()
@@ -20,7 +20,7 @@ Rook::Rook() : Piece()
 }
 
 /*********************************************************************
- * Rook Constructor
+ * CONSTRUCTOR
  * Will set all vaues to a default value. and will set the position
  * and the color of the piece
  *********************************************************************/

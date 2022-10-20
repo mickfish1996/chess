@@ -10,7 +10,7 @@
 #include "king.h"
 
 /***************************************************************************
- * King
+ * DEFAULT CONSTRUCTOR
  * will set all the values to the defaults because there were no inputs
  ***************************************************************************/
 King::King() : Piece()
@@ -19,8 +19,8 @@ King::King() : Piece()
 }
 
 /***************************************************************************
- * King
- * will set all the values to the defaults because there were no inputs
+ * CONSTRUCTOR
+ * will set all the values to the values that have been recieved.
  ***************************************************************************/
 King::King(const int &row, const int &col, const bool &whiteColor)
    : Piece(row, col, whiteColor)
@@ -29,7 +29,7 @@ King::King(const int &row, const int &col, const bool &whiteColor)
 }
 
 /***************************************************************************
-* getPossibleMoves
+* GET POSSIBLE MOVES
 * Will return a set with all possible moves for the king class.
 ***************************************************************************/
 std::set<Move> King::getPossibleMoves(const Board& board)

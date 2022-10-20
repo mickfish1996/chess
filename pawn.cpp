@@ -11,7 +11,7 @@
 #include <vector>
 
 /***************************************************************************
- * Default constructor
+ * DEFAULT CONSTRUCTOR
  * will set all values to a default value
  ***************************************************************************/
 Pawn::Pawn() : Piece()
@@ -20,7 +20,7 @@ Pawn::Pawn() : Piece()
 }
 
 /***************************************************************************
- * Constructor
+ * CONSTRUCTOR
  * given the row, col, and boolean color this constructor will set the 
  * position and the color of the pawn.
  ***************************************************************************/
@@ -31,7 +31,7 @@ Pawn::Pawn(const int &row, const int &col, const bool &whiteColor)
 }
 
 /***************************************************************************
- * getPossibleMoves
+ * GET POSSIBLE MOVES
  * Used to get all the places that the pawn is able to move on the board.
  ***************************************************************************/
 std::set<Move> Pawn::getPossibleMoves(const Board& board)
