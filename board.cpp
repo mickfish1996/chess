@@ -179,6 +179,7 @@ void Board::swap(const Move & move)
    int rowTo = move.getDest().getRow();
    int colTo = move.getDest().getCol();
 
+   // Remove memory leak
    delete(board[rowTo][colTo]);
 
    int next = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
@@ -204,6 +205,8 @@ void Board::swap(const Move & move)
       board[rowTo][colTo] = board[rowFrom][colFrom];
       board[rowTo][colTo]->assignPosition(rowTo, colTo);
       board[rowTo][colTo]->setTurn();
+
+      delete board[rowTo - next][colTo]; // Free memory at the pawn being removed.
       board[rowTo - next][colTo] = new Space(rowTo, colTo - next);
    }
 
@@ -228,12 +231,11 @@ void Board::swap(const Move & move)
       }
          
       // moves the rook into place
-      
+      delete board[rowTo][colTo + next];
       board[rowTo][colTo + next] = board[rowFrom][col];
       board[rowTo][colTo + next]->assignPosition(rowTo, colTo + next);
       board[rowTo][colTo + next]->setTurn();
 
-      //delete(board[rowFrom][col]);
       board[rowFrom][col] = new Space(rowFrom, col);
 
    }
