@@ -147,7 +147,11 @@ int main(int argc, char** argv)
 
    Interface ui("Chess");
 
-   Board board(true);
+   // Create the board
+   Board board;
+
+   // populate the pieces on the board.
+   board.fillBoard();
 
    ui.run(callBack, &board);             
 
