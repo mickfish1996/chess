@@ -82,6 +82,7 @@ void Board::addPiece(Piece piece)
 ***************************************************************************/
 void Board::fillBoard()
 {
+   // Clears all the spaces on the board in rows 0,1,6,7.
    for (int i = 0; i < 8; i++)
    {
       delete board[0][i];
