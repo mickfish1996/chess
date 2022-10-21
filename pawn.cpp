@@ -21,7 +21,7 @@ Pawn::Pawn() : Piece()
 
 /***************************************************************************
  * CONSTRUCTOR
- * given the row, col, and boolean color this constructor will set the 
+ * Given the row, col, and boolean color, this constructor will set the 
  * position and the color of the pawn.
  ***************************************************************************/
 Pawn::Pawn(const int &row, const int &col, const bool &whiteColor)

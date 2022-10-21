@@ -6,7 +6,6 @@
  * Description:
  *     The definition of all the needed atributes of Position
  ************************************************************************/
-
 #pragma once
 #include <iostream>
 #include <sstream>
@@ -32,7 +31,8 @@ public:
    void setLoc(const int loc);
    void set(const int r, const int c);
    bool isValid();
-   void adjustRow(const int adjustRow, int next) { row += (adjustRow * next); }
+   void adjustRow(const int adjustRow, int multiplier) { row += (adjustRow * multiplier); }  // TODO: Remove multiplier parameter.
+   void adjustRow(const int adjustRow) { row += adjustRow; }
    void adjustCol(const int adjustCol) { col += adjustCol; }
 
    bool operator== (Position rhs) const { return getLocation() == rhs.getLocation(); }

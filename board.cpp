@@ -26,17 +26,12 @@ Board::Board()
 {
    for (int row = 0; row < 8; row++)
    {
-      //std::vector<Piece> rowVector = {};
-
       for (int col = 0; col < 8; col++)
       {
          board[row][col] = new Space(row, col);
-         //rowVector.push_back(emptySpace);
       }
-
-      //board.push_back(rowVector);
    }
-      currentTurn = 0;
+   currentTurn = 0;
 }
 
 /***************************************************************************
@@ -47,15 +42,10 @@ Board::Board(bool build)
 {
    for (int row = 2; row < 6; row++)
    {
-      //std::vector<Piece> rowVector = {};
-
       for (int col = 0; col < 8; col++)
       {
          board[row][col] = new Space(row, col);
-         //rowVector.push_back(emptySpace);
       }
-
-      //board.push_back(rowVector);
    }
    fillBoard();
    currentTurn = 0;
@@ -67,27 +57,8 @@ Board::Board(bool build)
 ***************************************************************************/
 Piece Board::getPiece(const int& row, const int& col) const
 {
-   //return *(this->board[row][col]);
    return *board[row][col];
 }
-
-/*************************************
-* Board ASCII Reference
-* Top and Right sides are col and row.
-
-* +---0-1-2-3-4-5-6-7---+
-* |                     |
-* 8                     7
-* 7                     6
-* 6                     5
-* 5                     4
-* 4                     3
-* 3                     2
-* 2                     1
-* 1                     0
-* |                     |
-* +---a-b-c-d-e-f-g-h---+
-*************************************/
 
 /***************************************************************************
 * ADD Piece
@@ -98,7 +69,7 @@ void Board::addPiece(Piece piece)
    int col = piece.getCol();
    int row = piece.getRow();
    
-   board[row][col] = &piece;
+   *(board[row][col]) = piece;
 }
 
 /***************************************************************************
@@ -141,6 +112,24 @@ void Board::fillBoard()
    }
 }
 
+/*************************************
+* Board ASCII Reference
+* Top and Right sides are col and row.
+
+* +---0-1-2-3-4-5-6-7---+
+* |                     |
+* 8                     7
+* 7                     6
+* 6                     5
+* 5                     4
+* 4                     3
+* 3                     2
+* 2                     1
+* 1                     0
+* |                     |
+* +---a-b-c-d-e-f-g-h---+
+*************************************/
+
 /***************************************************************************
  * DRAW
  * Draws the board to the ogstream.
@@ -181,7 +170,7 @@ void Board::swap(const Move & move)
    // Remove memory leak
    delete(board[rowTo][colTo]);
 
-   int next = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
+   int pawnColorMod = (board[rowFrom][colFrom]->isWhite() ? 1 : -1);
 
    // If the pawn is Being promoted it will upgrade the pawn to a Queen
    if (move.isPromotion())
@@ -190,66 +179,61 @@ void Board::swap(const Move & move)
    }
 
    // If the pawn moves two spaces this will update the EnPassant turn
-   else if (board[rowFrom][colFrom % 8]->getType() == 'p' && abs(rowFrom - rowTo) == 2)
+   else if (board[rowFrom][colFrom]->getType() == 'p' && abs(rowFrom - rowTo) == 2)
    {
-      board[rowTo][colTo] = board[rowFrom][colFrom];
-      board[rowTo][colTo]->assignPosition(rowTo, colTo);
-      board[rowTo][colTo]->setTurn();
+      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
       board[rowTo][colTo]->setEnPassantTurn(currentTurn);
    }
 
-   // The pawn is able to enpassant, it moves to the space and sets the other pawn to space.
+   // If the pawn is going to enpassant, it moves to the space and sets the other pawn to space.
    else if(move.isEnpassant())
    {
-      board[rowTo][colTo] = board[rowFrom][colFrom];
-      board[rowTo][colTo]->assignPosition(rowTo, colTo);
-      board[rowTo][colTo]->setTurn();
+      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
 
-      delete board[rowTo - next][colTo]; // Free memory at the pawn being removed.
-      board[rowTo - next][colTo] = new Space(rowTo, colTo - next);
+      delete board[rowTo - pawnColorMod][colTo]; // Free memory at the pawn being removed.
+      board[rowTo - pawnColorMod][colTo] = new Space(rowTo, colTo - pawnColorMod);
    }
 
    // If able to castle This function will determine the destination of the resultant pieces.
    else if (move.isCastle())
    {
-      board[rowTo][colTo] = board[rowFrom][colFrom];
-      board[rowTo][colTo]->assignPosition(rowTo, colTo);
-      board[rowTo][colTo]->setTurn();
+      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
 
       // This is used to determine where to put the rook after the king has moved.
-      int col;
+      int rookOldCol;
+      int rookKingDistance = 0;
       if ((colFrom - colTo) > 0)
       {
-         next = 1;
-         col = 0;
+         rookKingDistance = 1;
+         rookOldCol = 0;
       }
       else
       {
-         next = -1;
-         col = 7;
+         rookKingDistance = -1;
+         rookOldCol = 7;
       }
-         
+      
+      int rookNewCol = colTo + rookKingDistance;
+
       // moves the rook into place
-      delete board[rowTo][colTo + next];
-      board[rowTo][colTo + next] = board[rowFrom][col];
-      board[rowTo][colTo + next]->assignPosition(rowTo, colTo + next);
-      board[rowTo][colTo + next]->setTurn();
-
-      board[rowFrom][col] = new Space(rowFrom, col);
-
+      delete board[rowTo][rookNewCol];                                // Deleting a Space
+      updateNewPosition(rowFrom, rookOldCol, rowTo, rookNewCol);     // Updates new Rook
+      board[rowFrom][rookOldCol] = new Space(rowFrom, rookOldCol);  // Sets Rook's old spot to Space
    }
 
    // Any other move is handled with this function.
    else
    {
-      board[rowTo][colTo] = board[rowFrom][colFrom];
-      board[rowTo][colTo]->assignPosition(rowTo, colTo);
-      board[rowTo][colTo]->setTurn();
+      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
    }
 
    // sets the space that the piece is coming from to a space.
-
-   //delete(board[rowFrom][colFrom]);
    board[rowFrom][colFrom] = new Space(rowFrom, colFrom);  
+}
 
+void Board::updateNewPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo)
+{
+   board[rowTo][colTo] = board[rowFrom][colFrom];
+   board[rowTo][colTo]->assignPosition(rowTo, colTo);
+   board[rowTo][colTo]->incrementTurn();
 }
