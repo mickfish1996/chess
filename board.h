@@ -54,4 +54,5 @@ private:
    std::set<Move> possibleMoves;
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }
+   void updateNewPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo);
 };
