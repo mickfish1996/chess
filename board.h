@@ -23,7 +23,6 @@ class Board
 {
 public:
    Board();
-   Board(bool build);
    
    // Getters
    Piece getPiece(const int& row, const int& col) const;
@@ -34,6 +33,8 @@ public:
    void draw(ogstream & gout) const;
    void swap(const Move & move);
    void addPiece(Piece piece);
+
+   void fillBoard();
 
    // Friend classes
    friend class TestPawn;
@@ -53,6 +54,4 @@ private:
    std::set<Move> possibleMoves;
 
    void setCurrentTurn(const int& turn) { currentTurn = turn; }
-   void fillBoard();
-   void updateNewPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo);
 };

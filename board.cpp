@@ -20,7 +20,7 @@
 
 /***************************************************************************
 * DEFAULT CONSTRUCTOR
-* The Default Constructor creates an empty board.
+* The Default Constructor creates an empty board with only spaces.
 ***************************************************************************/
 Board::Board()
 {
@@ -42,11 +42,21 @@ Board::Board(bool build)
 {
    for (int row = 2; row < 6; row++)
    {
+      //std::vector<Piece> rowVector = {};
+
       for (int col = 0; col < 8; col++)
       {
          board[row][col] = new Space(row, col);
+         //rowVector.push_back(emptySpace);
       }
+
+      //board.push_back(rowVector);
    }
+   fillBoard();
+   currentTurn = 0;
+}
+
+/***************************************************************************
    fillBoard();
    currentTurn = 0;
 }
@@ -68,16 +78,16 @@ void Board::addPiece(Piece piece)
 {
    int col = piece.getCol();
    int row = piece.getRow();
-   
-   *(board[row][col]) = piece;
-}
-
-/***************************************************************************
-* FILL BOARD
-* Fills the board with the default pieces.
-***************************************************************************/
 void Board::fillBoard()
 {
+   for (int i = 0; i < 8; i++)
+   {
+      delete board[0][i];
+      delete board[1][i];
+      delete board[6][i];
+      delete board[7][i];
+   }
+
    // Put kings on the board
    board[0][4] = new King(0, 4, true);
    board[7][3] = new King(7, 3, false);
