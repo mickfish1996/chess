@@ -96,33 +96,33 @@ void Board::fillBoard()
       delete board[7][i];
    }
 
-   // Put kings on the board
+   // Put the kings on the board.
    board[0][4] = new King(0, 4, true);
    board[7][3] = new King(7, 3, false);
 
-   // put the rooks on the board
+   // Put the rooks on the board.
    board[0][0] = new Rook(0, 0, true);
    board[0][7] = new Rook(0, 7, true);
    board[7][0] = new Rook(7, 0, false);
    board[7][7] = new Rook(7, 7, false);
 
-   // put the bishops on the board
+   // Put the bishops on the board.
    board[0][2] = new Bishop(0, 2, true);
    board[0][5] = new Bishop(0, 5, true);
    board[7][2] = new Bishop(7, 2, false);
    board[7][5] = new Bishop(7, 5, false);
 
-   // put the queens on the board
+   // Put the queens on the board.
    board[0][3] = new Queen(0, 3, true);
    board[7][4] = new Queen(7, 4, false);
 
-   // Put the knight on the board
+   // Put the knight on the board.
    board[0][1] = new Knight(0, 1, true);
    board[0][6] = new Knight(0, 6, true);
    board[7][1] = new Knight(7, 1, false);
    board[7][6] = new Knight(7, 6, false);
 
-   // puts all the pawns on the board.
+   // Put the pawns on the board.
    for (int col = 0; col < 8; col++)
    {
       board[1][col] = new Pawn(1, col, true);
