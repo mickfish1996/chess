@@ -24,7 +24,7 @@ class Board
 public:
    Board();
    
-   // Geters
+   // Getters
    Piece getPiece(const int& row, const int& col) const;
    int getCurrentTurn() const { return currentTurn; }
 
@@ -49,11 +49,10 @@ public:
    Piece& operator[] (Position& pos) { return *board[pos.getRow()][pos.getCol()]; }
 
 private:
-   // private member variables
    Piece* board[8][8];
    int currentTurn;
-
-   // private methods
-   void setCurrentTurn(const int& turn) { currentTurn = turn; }
    std::set<Move> possibleMoves;
+
+   void setCurrentTurn(const int& turn) { currentTurn = turn; }
+   void updateNewPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo);
 };

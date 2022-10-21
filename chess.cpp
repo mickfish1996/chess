@@ -29,7 +29,7 @@ using namespace std;
  * DRAW
  * Draw the current state of the game
  ***************************************************/
-void draw(const  Board* board, const Interface & ui, const set <Move> & possible)
+void draw(const Board* board, const Interface & ui, const set <Move> & possible)
 {
    ogstream gout;
    
