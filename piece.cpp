@@ -62,7 +62,7 @@ std::set<Move> Piece::getPossibleMoves(const Board& board)
       for (int col = 0; col < 8; col++)
       {
          // Adjusting possiblePosition to represent every position in captureSet.
-         possPos.adjustRow(moveSet[i][0], 1);
+         possPos.adjustRow(moveSet[i][0]);
          possPos.adjustCol(moveSet[i][1]);
 
          // Checks for valid row and col.

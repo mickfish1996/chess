@@ -31,7 +31,6 @@ public:
    void setLoc(const int loc);
    void set(const int r, const int c);
    bool isValid();
-   void adjustRow(const int adjustRow, int multiplier) { row += (adjustRow * multiplier); }  // TODO: Remove multiplier parameter.
    void adjustRow(const int adjustRow) { row += adjustRow; }
    void adjustCol(const int adjustCol) { col += adjustCol; }
 

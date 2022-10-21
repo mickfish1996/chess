@@ -60,7 +60,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in moveSet.
-      possPos.adjustRow(moveSet[i][0], whiteMultiplier);
+      possPos.adjustRow(moveSet[i][0] * whiteMultiplier);
       possPos.adjustCol(moveSet[i][1]);
       if (possPos.isValid())
       {
@@ -92,7 +92,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in captureSet.
-      possPos.adjustRow(captureSet[i][0], whiteMultiplier);
+      possPos.adjustRow(captureSet[i][0] * whiteMultiplier);
       possPos.adjustCol(captureSet[i][1]);
       if (possPos.isValid())
       {
@@ -118,7 +118,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
       Position possPos = position;
 
       // Adjusting possiblePosition to represent every position in enPassantSet.
-      possPos.adjustRow(enPassantSet[i][0], whiteMultiplier);  // I don't understand why whiteMultiplier is necessary, since enPassantSet[any][0] == 0.
+      // No need to adjust row, since enPassantSet[i][0] is 0.
       possPos.adjustCol(enPassantSet[i][1]);
       if (possPos.isValid())
       {
@@ -131,7 +131,7 @@ std::set<Move> Pawn::getPossibleMoves(const Board& board)
             {
                Move move = Move();
                move.setSource(this->getPosition());
-               possPos.adjustRow(moveSet[0][0], whiteMultiplier);   // Auto adjust for when change moveSet for Black Pieces.
+               possPos.adjustRow(moveSet[0][0] * whiteMultiplier);   // Auto adjust for when change moveSet for Black Pieces.
                move.setDest(possPos);
                move.setPieceType(this->getType());
                move.setWhiteColor(this->isWhite());

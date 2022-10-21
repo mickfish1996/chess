@@ -200,14 +200,14 @@ void Board::swap(const Move & move)
    // If the pawn moves two spaces this will update the EnPassant turn
    else if (board[rowFrom][colFrom]->getType() == 'p' && abs(rowFrom - rowTo) == 2)
    {
-      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
+      updateBoardPosition(rowFrom, colFrom, rowTo, colTo);
       board[rowTo][colTo]->setEnPassantTurn(currentTurn);
    }
 
    // If the pawn is going to enpassant, it moves to the space and sets the other pawn to space.
    else if(move.isEnpassant())
    {
-      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
+      updateBoardPosition(rowFrom, colFrom, rowTo, colTo);
 
       delete board[rowTo - pawnColorMod][colTo]; // Free memory at the pawn being removed.
       board[rowTo - pawnColorMod][colTo] = new Space(rowTo, colTo - pawnColorMod);
@@ -216,7 +216,7 @@ void Board::swap(const Move & move)
    // If able to castle This function will determine the destination of the resultant pieces.
    else if (move.isCastle())
    {
-      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
+      updateBoardPosition(rowFrom, colFrom, rowTo, colTo);
 
       // This is used to determine where to put the rook after the king has moved.
       int rookOldCol;
@@ -236,21 +236,21 @@ void Board::swap(const Move & move)
 
       // moves the rook into place
       delete board[rowTo][rookNewCol];                                // Deleting a Space
-      updateNewPosition(rowFrom, rookOldCol, rowTo, rookNewCol);     // Updates new Rook
+      updateBoardPosition(rowFrom, rookOldCol, rowTo, rookNewCol);   // Updates new Rook
       board[rowFrom][rookOldCol] = new Space(rowFrom, rookOldCol);  // Sets Rook's old spot to Space
    }
 
    // Any other move is handled with this function.
    else
    {
-      updateNewPosition(rowFrom, colFrom, rowTo, colTo);
+      updateBoardPosition(rowFrom, colFrom, rowTo, colTo);
    }
 
    // sets the space that the piece is coming from to a space.
    board[rowFrom][colFrom] = new Space(rowFrom, colFrom);  
 }
 
-void Board::updateNewPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo)
+void Board::updateBoardPosition(const int rowFrom, const int colFrom, const int rowTo, const int colTo)
 {
    board[rowTo][colTo] = board[rowFrom][colFrom];
    board[rowTo][colTo]->assignPosition(rowTo, colTo);
