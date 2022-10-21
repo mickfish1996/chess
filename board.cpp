@@ -73,7 +73,8 @@ void Board::addPiece(Piece piece)
    int col = piece.getCol();
    int row = piece.getRow();
    
-   board[row][col] = &piece;
+   //delete board[row][col];
+   *board[row][col] = piece;
 }
 
 /***************************************************************************
