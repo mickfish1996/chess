@@ -33,14 +33,12 @@ public:
    void draw(ogstream & gout) const;
    void swap(const Move & move);
    void addPiece(Piece piece);
-
    void fillBoard();
 
    // Friend classes
    friend class TestPawn;
    friend class TestKing;
 
-   // calls all getPossible move class for a funtion.
    std::set<Move> getMoves(int row, int col, Board& board) const;
 
    // overriding operators

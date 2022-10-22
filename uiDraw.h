@@ -8,9 +8,7 @@
  *    much like COUT except it also has some convenient methods for
  *    drawing chess pieces on the screen.
  ************************************************************************/
-
 #pragma once
-
 #include <sstream>    // for OSTRINGSTRING
 using std::string;
 

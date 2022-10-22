@@ -2,7 +2,6 @@
 * TEST KING
 * The TestKing class contains all of the unit tests for the King class.
 ******************************************************************************/
-
 #pragma once
 #include <cassert>
 #include <set>
@@ -11,8 +10,6 @@
 #include "position.h"
 #include "board.h"
 #include <string>
-
-using namespace std;
 
 class TestKing
 {

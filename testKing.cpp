@@ -11,7 +11,6 @@
 #include <string>
 #include "rook.h"
 
-
 void TestKing::run()
 {
    getMoves_free();

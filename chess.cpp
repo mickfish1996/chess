@@ -7,13 +7,6 @@
  *     Contains main, will run the game loop and make sure everthing
  *     needed to execute is executed.
  ************************************************************************/
-
-/**********************************************************************
- * GL Demo
- * Just a simple program to demonstrate how to create an Open GL window, 
- * draw something on the window, and accept simple user input
- **********************************************************************/
-
 #include "uiInteract.h"   // for Interface
 #include "uiDraw.h"       // for draw*
 #include <set>            // for STD::SET
@@ -23,13 +16,11 @@
 #include "test.h"
 #include "king.h"
 
-using namespace std;
-
 /***************************************************
  * DRAW
  * Draw the current state of the game
  ***************************************************/
-void draw(const Board* board, const Interface & ui, const set <Move> & possible)
+void draw(const Board* board, const Interface & ui, const std::set <Move> & possible)
 {
    ogstream gout;
    
@@ -45,8 +36,6 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
    {
       gout.drawPossible(it->getDest().getLocation());
    }
-   //for (it = possible.begin(); it != possible.end(); ++it)
-   //   gout.drawPossible(*it.g);
 
    board->draw(gout);
 }
@@ -90,7 +79,6 @@ bool move(Board* board, int posFrom, int posTo)
    }
 
    return false;
-
 }
 
 /*************************************
@@ -118,10 +106,7 @@ void callBack(Interface *pUI,  void * board)
       if (pBoard->getCurrentTurn() % 2 == 1 && !pBoard->getPiece(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8).isWhite())
          possibleMoves = pBoard->getMoves(pUI->getSelectPosition() / 8, pUI->getSelectPosition() % 8, *pBoard);
    }
-   
-   // This being commented out seems to make no difference.
-   //else
-     // pUI->clearPreviousPosition();
+
    // draw the board
    draw(pBoard, *pUI, possibleMoves);
 }

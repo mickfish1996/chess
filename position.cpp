@@ -7,7 +7,6 @@
  *     Implement the Position class filling constructors and
  *     defining all methods that are needed.
  ************************************************************************/
-
 #include "position.h"
 #include <sstream>
 

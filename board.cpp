@@ -34,33 +34,6 @@ Board::Board()
    currentTurn = 0;
 }
 
-///***************************************************************************
-//* DEFAULT CONSTRUCTOR
-//* The Default Constructor creates an empty board.
-//***************************************************************************/
-//Board::Board(bool build)
-//{
-//   for (int row = 2; row < 6; row++)
-//   {
-//      //std::vector<Piece> rowVector = {};
-//
-//      for (int col = 0; col < 8; col++)
-//      {
-//         board[row][col] = new Space(row, col);
-//         //rowVector.push_back(emptySpace);
-//      }
-//
-//      //board.push_back(rowVector);
-//   }
-//   fillBoard();
-//   currentTurn = 0;
-//}
-
-/***************************************************************************
-   fillBoard();
-   currentTurn = 0;
-}
-
 /***************************************************************************
 * GET PIECE
 * Given a row and column, returns the piece at that location on the board.

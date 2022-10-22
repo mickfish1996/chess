@@ -20,7 +20,7 @@ Rook::Rook() : Piece()
 }
 
 /*********************************************************************
- * CONSTRUCTOR
+ * NON-DEFAULT CONSTRUCTOR
  * Will set all vaues to a default value. and will set the position
  * and the color of the piece
  *********************************************************************/

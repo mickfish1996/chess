@@ -2,7 +2,6 @@
 * TEST PAWN
 * The TestPawn class contains all of the unit tests for the Pawn class.
 ******************************************************************************/
-
 #pragma once
 #include <iostream>
 #include "pawn.h"

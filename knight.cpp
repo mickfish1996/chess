@@ -36,7 +36,7 @@ std::set<Move> Knight::getPossibleMoves(const Board& board)
 {
    std::set<Move> moves;
 
-   // A vecot filled with all of the possible spots from the current space
+   // A vector filled with all of the possible spots from the current space
    // that the piece can move to.
    std::vector<std::vector<int>> moveSet = { {2, -1}, {1, -2}, {2, 1},{1, 2}, {-1, 2}, {-2, -1}, {-1, -2}, {-2, 1} };
    

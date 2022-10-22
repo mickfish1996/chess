@@ -6,7 +6,6 @@
  * Description:
  *     Defines the derived class King and all its needed methods
  ************************************************************************/
-
 #pragma once
 #include "piece.h"
 #include "space.h"
@@ -17,7 +16,6 @@
 * KING
 * The King class contains information needed specifically for King.
 ******************************************************************************/
-
 class King :
    public Piece
 {

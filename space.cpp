@@ -18,7 +18,7 @@ Space::Space() : Piece()
 }
 
 /***************************************************************************
- * CONSTRUCTOR
+ * NON-DEFAULT CONSTRUCTOR
  * will set all the values to the included variables
  ***************************************************************************/
 Space::Space(const int& row, const int& col)

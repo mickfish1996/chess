@@ -1,13 +1,12 @@
 /***********************************************************************
  * Header File:
- *     Pawn, Rook
+ *     Piece
  * Author:
  *     Kyler Melor, Michael Fisher
  * Description:
  *     Defines the Base class Piece and all its needed methods
  *     as well as the derived class rook.
  ************************************************************************/
-
 #pragma once
 #include <set>
 #include "position.h"
@@ -16,6 +15,7 @@
 #include "board.h"
 #include "uiDraw.h"
 
+// Prevents Circular Reference
 class Board;
 
 /******************************************************************************
